@@ -47,14 +47,26 @@ class Jobs::AssetListCompare
 
           #在庫に変化があった場合
           if transition != 0 then
-             puts "Item:" + new[0].to_s + " 推移:" + transition.to_s
+            puts "Item:" + new[0].to_s + " 推移:" + transition.to_s
+            inv = InventoryTransitions.new
+            inv.type_id = new[0]
+            inv.location_id = new[1]
+            inv.count = transition
+            inv.add_date = Time.now
+            inv.save
           end
         end
       end
 
       #new にしか存在しない場合
       if flg == false then
-          puts "Item:" + new[0].to_s + " 新規推移:" + new[2].to_s
+        puts "Item:" + new[0].to_s + " 新規推移:" + new[2].to_s
+        inv = InventoryTransitions.new
+        inv.type_id = new[0]
+        inv.location_id = new[1]
+        inv.count = new[2]
+        inv.add_date = Time.now
+        inv.save
       end
     end
 
@@ -70,7 +82,13 @@ class Jobs::AssetListCompare
 
       #old にしか存在しない場合
       if flg == false then
-        puts "Item:" + new[0].to_s + "削除推移:" + (-(old[2])).to_s
+        puts "Item:" + old[0].to_s + "削除推移:" + (-(old[2])).to_s
+        inv = InventoryTransitions.new
+        inv.type_id = old[0]
+        inv.location_id = old[1]
+        inv.count = old[2]
+        inv.add_date = Time.now
+        inv.save
       end
     end
 
