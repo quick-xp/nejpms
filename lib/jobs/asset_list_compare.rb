@@ -31,7 +31,7 @@ class Jobs::AssetListCompare
       :order => [:type_id.asc])
 
 
-    puts new_type_id_lists.count
+    puts "在庫推移計算 開始"
 
     flg = false
 
@@ -58,6 +58,21 @@ class Jobs::AssetListCompare
       end
     end
 
+    for old in old_type_id_lists.each do
+      flg = false
+      for new in new_type_id_lists.each do
+        # type_id と location_id が一致した場合
+        if new[0] == old[0] &&
+          new[1] == old[1] then
+          flg = true #一致した
+        end
+      end
+
+      #old にしか存在しない場合
+      if flg == false then
+        puts "Item:" + new[0].to_s + "削除推移:" + (-(old[2])).to_s
+      end
+    end
 
   end
 end
