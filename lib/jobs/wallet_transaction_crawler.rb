@@ -10,12 +10,14 @@ class Jobs::WalletTransactionCrawler
       # TODO Load key from config
       keyID="2113292"
       verifyCode ="nv0vGMk45dP3bKy5AfzHyb3iKnGO42d6wnXbdJU4bQ23ujtsEdquLUc6hA5Y8XKT"
-      accountKey="1004"
+      #accountKey="1004"
 
-      response = fetch(keyID,verifyCode,accountKey)
-      puts response
-      persist_wallet_transaction response
-
+      list = Array["1000","1001","1002","1003","1004","1005","1006"]
+      list.each {|accountKey|
+        response = fetch(keyID,verifyCode,accountKey)
+        puts response
+        persist_wallet_transaction response
+      }
     rescue => e
       puts "Wallet Transaction Crawler error occures : " + e.message
     end
@@ -25,6 +27,7 @@ class Jobs::WalletTransactionCrawler
   def persist_wallet_transaction(xml)
 
     puts "insert wallet transaction : transactionID"
+    begin
     transactions = xml.result.rowset.row.map do |tran|
       # puts tran.transactionID
       WalletTransactions.new(transactionID: tran.transactionID,
@@ -42,6 +45,9 @@ class Jobs::WalletTransactionCrawler
                             journalTransactionID: tran.journalTransactionID)
     end
     WalletTransactions.bulk_persist! transactions
+    rescue
+      puts "skip"
+    end
   end
 
   def fetch(keyID,verifyCode,accountKey)
