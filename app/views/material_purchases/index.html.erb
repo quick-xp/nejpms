@@ -1,0 +1,31 @@
+<h1>Listing material_purchases</h1>
+
+<table>
+  <tr>
+    <th>Transaction</th>
+    <th>Type</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th>Station</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @material_purchases.each do |material_purchase| %>
+  <tr>
+    <td><%= material_purchase.transaction_id %></td>
+    <td><%= material_purchase.type_id %></td>
+    <td><%= material_purchase.quantity %></td>
+    <td><%= material_purchase.price %></td>
+    <td><%= material_purchase.station_id %></td>
+    <td><%= link_to 'Show', material_purchase %></td>
+    <td><%= link_to 'Edit', edit_material_purchase_path(material_purchase) %></td>
+    <td><%= link_to 'Destroy', material_purchase, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Material purchase', new_material_purchase_path %>

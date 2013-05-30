@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Transaction:</b>
+  <%= @material_purchase.transaction_id %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @material_purchase.item.type_name %>
+</p>
+
+<p>
+  <b>Quantity:</b>
+  <%= @material_purchase.quantity %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @material_purchase.price %>
+</p>
+
+<p>
+  <b>Station:</b>
+  <%= @material_purchase.sta.station_name %>
+</p>
+
+
+<%= link_to 'Edit', edit_material_purchase_path(@material_purchase) %> |
+<%= link_to 'Back', material_purchases_path %>

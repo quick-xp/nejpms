@@ -1,4 +1,7 @@
 Nejpms::Application.routes.draw do
+  resources :material_purchases
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
