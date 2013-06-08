@@ -1,8 +1,16 @@
 Nejpms::Application.routes.draw do
+  resources :asset_lists
+  resources :asset_lists do
+    collection do
+      post 'search'
+    end
+  end
+
   resources :blue_print_purchases
 
 
   resources :material_purchases
+
 
 
   # The priority is based upon order of creation:

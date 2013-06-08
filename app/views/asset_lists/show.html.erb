@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Item:</b>
+  <%= @asset_list.get_type_name %>
+</p>
+
+<p>
+  <b>Quantity:</b>
+  <%= @asset_list.quantity %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @asset_list.type_id %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%= @asset_list.location_id %>
+</p>
+
+<p>
+  <b>Flag:</b>
+  <%= @asset_list.flag %>
+</p>
+
+
+<%= link_to 'Back', asset_lists_path %>

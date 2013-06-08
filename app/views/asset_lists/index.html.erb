@@ -1,0 +1,34 @@
+<h1>Listing asset_lists</h1>
+
+<%= form_tag :action => :search do %>
+  s_item_name : <%= text_field_tag :s_type %>
+  s_flag : <%= text_field_tag :s_flag %>
+  <%= submit_tag 'search'%>
+<% end %>
+
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Quantity</th>
+    <th>Type</th>
+    <th>Location</th>
+    <th>Flag</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @asset_lists.each do |asset_list| %>
+  <tr>
+    <td><%= asset_list.item_id %></td>
+    <td><%= asset_list.quantity %></td>
+    <td><%= asset_list.get_type_name %></td>
+    <td><%= asset_list.location_id %></td>
+    <td><%= asset_list.flag %></td>
+    <td><%= link_to 'Show', asset_list %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
