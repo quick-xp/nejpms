@@ -1,4 +1,7 @@
 Nejpms::Application.routes.draw do
+  resources :blue_print_purchases
+
+
   resources :material_purchases
 
 

@@ -1,0 +1,33 @@
+<%= form_for(@blue_print_purchase) do |f| %>
+  <% if @blue_print_purchase.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@blue_print_purchase.errors.count, "error") %> prohibited this blue_print_purchase from being saved:</h2>
+
+      <ul>
+      <% @blue_print_purchase.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :type_id %><br />
+    <%= f.text_field :type_id ,:value=>@blue_print_purchase.get_type_name%>
+  </div>
+  <div class="field">
+    <%= f.label :use_count %><br />
+    <%= f.text_field :use_count %>
+  </div>
+  <div class="field">
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+  </div>
+  <div class="field">
+    <%= f.label :comment %><br />
+    <%= f.text_field :comment %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

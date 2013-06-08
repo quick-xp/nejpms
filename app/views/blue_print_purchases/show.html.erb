@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Type:</b>
+  <%= @blue_print_purchase.get_type_name %>
+</p>
+
+<p>
+  <b>Use count:</b>
+  <%= @blue_print_purchase.use_count %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @blue_print_purchase.price %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%= @blue_print_purchase.comment %>
+</p>
+
+
+<%= link_to 'Edit', edit_blue_print_purchase_path(@blue_print_purchase) %> |
+<%= link_to 'Back', blue_print_purchases_path %>
