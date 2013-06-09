@@ -1,4 +1,7 @@
 Nejpms::Application.routes.draw do
+  resources :user_lists
+
+
   resources :asset_lists
   resources :asset_lists do
     collection do
