@@ -1,0 +1,47 @@
+<h1>New product_result</h1>
+<%= form_for(@product_result) do |f| %>
+  <% if @product_result.errors.any? %>
+  <div id="error_explanation">
+  <h2><%= pluralize(@product_result.errors.count, "error") %> prohibited this product_result from being saved:</h2>
+
+  <ul>
+    <% @product_result.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+  <% end %>
+
+<div class="field">
+  <%= f.label :type_id %><br />
+  <%= f.text_field :type_id %>
+</div>
+<div class="field">
+  <%= f.label :owner_id %><br />
+  <%= f.collection_select :owner_id,UserList.all,:user_id,:user_name %>
+</div>
+<div class="field">
+  <%= f.label :create_count %><br />
+  <%= f.text_field :create_count %>
+</div>
+<div class="field">
+  <%= f.label :sum_price %><br />
+  <%= f.text_field :sum_price %>
+</div>
+
+<div class="field">
+  <% @product_result_item.each_with_index do |formin,i| %>
+    <%= i %>
+  <%= fields_for "product_result_item[]",formin,:index => i do |p| %>
+    <%= p.text_field:type_id %>
+  <%= p.text_field:use_item_count %>
+  <br/>
+<% end %>
+<% end %>
+</div>
+<div class="actions">
+  <%= f.submit %>
+</div>
+<% end %>
+
+<%= link_to 'Back', product_results_path %>

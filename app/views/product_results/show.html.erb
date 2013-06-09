@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Type:</b>
+  <%= @product_result.get_type_name %>
+</p>
+
+<p>
+  <b>Owner:</b>
+  <%= @product_result.user.user_name %>
+</p>
+
+<p>
+  <b>Create count:</b>
+  <%= @product_result.create_count %>
+</p>
+
+<p>
+  <b>Sum price:</b>
+  <%= @product_result.sum_price %>
+</p>
+
+<% @product_result_item.each_with_index do |formin,i| %>
+  <%= i %>
+  <%= @product_result_item[i].get_type_name %>
+  <%= @product_result_item[i].use_item_count %>
+  <%= @product_result_item[i].sum_price %>
+  <br/>
+<% end %>
+
+<%= link_to 'Edit', edit_product_result_path(@product_result) %> |
+<%= link_to 'Back', product_results_path %>

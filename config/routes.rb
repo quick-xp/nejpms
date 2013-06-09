@@ -1,4 +1,10 @@
 Nejpms::Application.routes.draw do
+  resources :costs
+
+
+  resources :product_results
+
+
   resources :user_lists
 
 
