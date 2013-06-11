@@ -3,7 +3,7 @@ require 'net/http'
 require 'uri'
 require 'xml-object'
 
-# rails runner "Jobs::QuicklookCrawler.new.run"
+# rails runner "Jobs::WalletTransactionCrawler.new.run"
 class Jobs::WalletTransactionCrawler
   def run
     begin
