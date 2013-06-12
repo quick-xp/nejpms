@@ -6,7 +6,8 @@
   <%= submit_tag 'search'%>
 <% end %>
 
-<table>
+<table id="asset-list-table">
+<thead>
   <tr>
     <th>Item</th>
     <th>Quantity</th>
@@ -17,7 +18,9 @@
     <th></th>
     <th></th>
   </tr>
+</thead>
 
+<tbody>
 <% @asset_lists.each do |asset_list| %>
   <tr>
     <td><%= asset_list.item_id %></td>
@@ -26,8 +29,11 @@
     <td><%= asset_list.location_id %></td>
     <td><%= asset_list.flag %></td>
     <td><%= link_to 'Show', asset_list %></td>
+    <td></td>
+    <td></td>
   </tr>
 <% end %>
+</tbody>
 </table>
 
 <br />
