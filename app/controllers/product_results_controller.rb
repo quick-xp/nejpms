@@ -53,7 +53,7 @@ class ProductResultsController < ApplicationController
     sum = 0
 
     #トランザクション開始
-    @product_result_item.transaction{
+    PeoductResult.transaction{
 
       @product_result_item.each{|item|
         if item.type_id != "" then
@@ -95,7 +95,7 @@ class ProductResultsController < ApplicationController
     @product_result_item = items_params
 
     #トランザクション開始
-    @product_result_item.transaction{
+    ProductResult.transaction{
       calctool = Cost.new
       ProductResultItem.all(:relation_id => params[:id]).map {|item|
         item.destroy
