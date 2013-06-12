@@ -39,7 +39,7 @@ class Cost
       sum = 0
       items.map {|item|
         sum += item[:price]
-        total_quantity += 1
+        total_quantity += item[:use_count]
       }
 
       puts "item:"
