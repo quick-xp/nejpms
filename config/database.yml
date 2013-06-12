@@ -1,10 +1,10 @@
 defaults: &defaults
   adapter: mysql
   username: root
-  password: 
+  password: express3
   host: localhost
 
 development:
-  database: nejpms
+  database: evetest2
   <<: *defaults
 
