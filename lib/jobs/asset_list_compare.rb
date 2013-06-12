@@ -92,5 +92,15 @@ class Jobs::AssetListCompare
       end
     end
 
+    copy_asset_list
+  end
+
+  def copy_asset_list
+    AssetListsComp.destroy!
+    AssetLists.transaction do
+      AssetLists.each do |asset|
+        AssetListsComp.new(asset.attributes).save
+      end
+    end
   end
 end

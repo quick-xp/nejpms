@@ -45,8 +45,9 @@ class Jobs::WalletTransactionCrawler
                             journalTransactionID: tran.journalTransactionID)
     end
     WalletTransactions.bulk_persist! transactions
-    rescue
+    rescue => e
       puts "skip"
+      p e.backtrace
     end
   end
 
