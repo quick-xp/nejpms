@@ -51,35 +51,40 @@ class ProductResultsController < ApplicationController
     #使用アイテム登録
     iid = Time.now.strftime("%m%d%H%M%S").to_i
     sum = 0
-    @product_result_item.each{|item|
-      if item.type_id != "" then
-        item.relation_id = iid.to_i
-        item.type_id = InvTypes.first(:type_name => item.type_id)[:type_id]
-        if BluePrintPurchase.first(:type_id => item.type_id) == nil then
-          item.sum_price = calctool.calculate_material_cost(item.type_id) * item.use_item_count
-        else
-          item.sum_price = calctool.calculate_blueprint_cost(item.type_id) * item.use_item_count
+
+    #トランザクション開始
+    @product_result_item.transaction{
+
+      @product_result_item.each{|item|
+        if item.type_id != "" then
+          item.relation_id = iid.to_i
+          item.type_id = InvTypes.first(:type_name => item.type_id)[:type_id]
+          if BluePrintPurchase.first(:type_id => item.type_id) == nil then
+            item.sum_price = calctool.calculate_material_cost(item.type_id) * item.use_item_count
+          else
+            item.sum_price = calctool.calculate_blueprint_cost(item.type_id) * item.use_item_count
+          end
+          sum += item.sum_price
+          item.save
         end
-        sum += item.sum_price
-        item.save
+      }
+
+      # 実績登録
+      @product_result.id = iid
+      @product_result.type_id = InvTypes.first(:type_name => @product_result.type_id)[:type_id]
+
+      @product_result.sum_price = sum
+
+      respond_to do |format|
+        if @product_result.save
+          format.html { redirect_to @product_result, notice: 'Product result was successfully created.' }
+          format.json { render json: @product_result, status: :created, location: @product_result }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @product_result.errors, status: :unprocessable_entity }
+        end
       end
     }
-
-    # 実績登録
-    @product_result.id = iid
-    @product_result.type_id = InvTypes.first(:type_name => @product_result.type_id)[:type_id]
-
-    @product_result.sum_price = sum
-
-    respond_to do |format|
-      if @product_result.save
-        format.html { redirect_to @product_result, notice: 'Product result was successfully created.' }
-        format.json { render json: @product_result, status: :created, location: @product_result }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @product_result.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # PATCH/PUT /product_results/1
@@ -89,42 +94,48 @@ class ProductResultsController < ApplicationController
     result = ProductResult.new(product_result_params)
     @product_result_item = items_params
 
-    calctool = Cost.new
-    ProductResultItem.all(:relation_id => params[:id]).map {|item|
-      item.destroy
-    }
-    sum = 0
-    #使用アイテム登録
-     @product_result_item.each{|item|
-      if item.type_id != "" then
-        item.relation_id = params[:id]
-        item.type_id = InvTypes.first(:type_name => item.type_id)[:type_id]
-        if BluePrintPurchase.first(:type_id => item.type_id) == nil then
-          item.sum_price = calctool.calculate_material_cost(item.type_id) * item.use_item_count
-        else
-          item.sum_price = calctool.calculate_blueprint_cost(item.type_id) * item.use_item_count
+    #トランザクション開始
+    @product_result_item.transaction{
+      calctool = Cost.new
+      ProductResultItem.all(:relation_id => params[:id]).map {|item|
+        item.destroy
+      }
+      sum = 0
+
+
+
+      #使用アイテム登録
+      @product_result_item.each{|item|
+        if item.type_id != "" then
+          item.relation_id = params[:id]
+          item.type_id = InvTypes.first(:type_name => item.type_id)[:type_id]
+          if BluePrintPurchase.first(:type_id => item.type_id) == nil then
+            item.sum_price = calctool.calculate_material_cost(item.type_id) * item.use_item_count
+          else
+            item.sum_price = calctool.calculate_blueprint_cost(item.type_id) * item.use_item_count
+          end
+          sum += item.sum_price
+          item.save
         end
-        sum += item.sum_price
-        item.save
+      }
+
+      # 実績登録
+      # @product_result.sum_price = sum
+      owner_id = params[:product_result][:owner_id]
+      create_count = params[:product_result][:create_count]
+
+      respond_to do |format|
+        if @product_result.update(:owner_id => owner_id,
+                                  :create_count => create_count,
+                                  :sum_price => sum)
+          format.html { redirect_to @product_result, notice: 'Product result was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @product_result.errors, status: :unprocessable_entity }
+        end
       end
     }
-
-    # 実績登録
-   # @product_result.sum_price = sum
-    owner_id = params[:product_result][:owner_id]
-    create_count = params[:product_result][:create_count]
-
-    respond_to do |format|
-      if @product_result.update(:owner_id => owner_id,
-                               :create_count => create_count,
-                               :sum_price => sum)
-        format.html { redirect_to @product_result, notice: 'Product result was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @product_result.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # DELETE /product_results/1
