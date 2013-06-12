@@ -53,7 +53,7 @@ class ProductResultsController < ApplicationController
     sum = 0
 
     #トランザクション開始
-    PeoductResult.transaction{
+    ProductResult.transaction{
 
       @product_result_item.each{|item|
         if item.type_id != "" then
