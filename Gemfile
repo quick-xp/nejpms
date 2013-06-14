@@ -59,6 +59,7 @@ group :assets do
   gem 'bootstrap-sass-rails', '~> 2.3.1.0'
   gem 'bootstrap-datepicker-rails', '~> 0.6.8'
   gem 'therubyracer', '~> 0.10.2', :platform => :ruby
+  gem 'jquery-datatables-rails'
 end
 
 group :test, :development do
