@@ -1,6 +1,7 @@
 <h1>Listing material_purchases</h1>
 
-<table>
+<table id="purchases-table">
+<thead>
   <tr>
     <th>Transaction</th>
     <th>Type</th>
@@ -11,7 +12,9 @@
     <th></th>
     <th></th>
   </tr>
+</thead>
 
+<tbody>
 <% @material_purchases.each do |material_purchase| %>
   <tr>
     <td><%= material_purchase.transaction_id %></td>
@@ -24,6 +27,7 @@
     <td><%= link_to 'Destroy', material_purchase, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
+</tbody>
 </table>
 
 <br />

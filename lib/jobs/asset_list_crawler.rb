@@ -24,17 +24,27 @@ class Jobs::AssetListCrawler
 
     #todo : インベントリ取得対象が複数ロケーションある場合は改修が必須
     puts "insert asset list : itemID"
-    location_id = xml.result.rowset.row.locationID
-    transactions = xml.result.rowset.row.rowset.map do |tran|
-      AssetLists.new(item_id: tran.itemID,
-                     location_id: location_id,
-                     quantity: tran.quantity,
-                     type_id: tran.typeID,
-                     flag: tran.flag)
-
-    end
     AssetLists.all.destroy
+
+    temp = xml.result.rowset.row
+    temp.map do |t|
+      puts t.typeID
+     if t.typeID == "27" then
+
+      puts t.typeID
+      location_id = t.locationID
+      transactions = t.rowset.map do |tran|
+        AssetLists.new(item_id: tran.itemID,
+                       location_id: location_id,
+                       quantity: tran.quantity,
+                       type_id: tran.typeID,
+                       flag: tran.flag)
+
+      end
+
     AssetLists.bulk_persist! transactions
+     end
+    end
 
   end
 
