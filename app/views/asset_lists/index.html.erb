@@ -1,18 +1,12 @@
-<h1>Listing asset_lists</h1>
-
-<%= form_tag :action => :search do %>
-  s_item_name : <%= text_field_tag :s_type %>
-  s_flag : <%= text_field_tag :s_flag %>
-  <%= submit_tag 'search'%>
-<% end %>
+<h1>在庫マスタ</h1>
 
 <table id="asset-list-table">
 <thead>
   <tr>
-    <th>Item</th>
-    <th>Quantity</th>
-    <th>Type</th>
-    <th>Location</th>
+    <th>アイテムID</th>
+    <th>在庫</th>
+    <th>アイテム名</th>
+    <th>ステーション</th>
     <th>Flag</th>
     <th></th>
     <th></th>
@@ -28,7 +22,7 @@
     <td><%= asset_list.get_type_name %></td>
     <td><%= asset_list.location_id %></td>
     <td><%= asset_list.flag %></td>
-    <td><%= link_to 'Show', asset_list %></td>
+    <td><%= link_to '詳細', asset_list %></td>
     <td></td>
     <td></td>
   </tr>
