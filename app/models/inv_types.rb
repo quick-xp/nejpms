@@ -14,7 +14,7 @@ class InvTypes
   property :capacity, Float, field: 'capacity'
   property :portion_size, Integer, field: 'portionSize'
   property :race_id, Integer, field: 'raceID'
-  property :basePrice, Decimal, field: 'basePrice'
+  property :base_price, Decimal, field: 'basePrice'
   property :published, Integer, field: 'published'
   property :market_group_id, Integer, field: 'marketGroupID'
   property :chance_of_duplicating, Float, field: 'chanceOfduplicating'
@@ -25,4 +25,17 @@ class InvTypes
     tc_id: '8',
     language_id: 'JA'
 
+  belongs_to :description_ja, 'TrnTranslations',
+    parent_key: [ :key_id ],
+    child_key: [ :type_id ],
+    tc_id: '33',
+    language_id: 'JA'
+
+  def type_name_ja_text
+    type_name_ja.try(:text)
+  end
+
+  def description_ja_text
+    description_ja.try(:text)
+  end
 end

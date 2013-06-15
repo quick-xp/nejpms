@@ -7,7 +7,7 @@ class AssetListsController < ApplicationController
   end
 
   def show
-    @asset_list = AssetLists.get(params[:id])
+    @asset = AssetLists.get(params[:id])
   end
 
   def search
