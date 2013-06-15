@@ -1,29 +1,52 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Item:</b>
-  <%= @asset_list.get_type_name %>
-</p>
+<h2>在庫詳細</h2>
 
-<p>
-  <b>Quantity:</b>
-  <%= @asset_list.quantity %>
-</p>
+<table class="table assets">
+  <tbody>
+    <tr>
+      <th>アイテム名</th>
+      <td><%= @asset.get_type_name %> ( <%= @asset.try(:item).try(:type_name) %> )</td>
+    </tr>
+    <tr>
+      <th>在庫</th>
+      <td><%= @asset.quantity %></td>
+    </tr>
+    <tr>
+      <th>TypeID</th>
+      <td><%= @asset.type_id%></td>
+    </tr>
+    <tr>
+      <th>ロケーション</th>
+      <td><%= @asset.location_id %></td>
+    </tr>
+    <tr>
+      <th>フラグ</th>
+      <td><%= @asset.flag %></td>
+    </tr>
+  </tbody>
+</table>
 
-<p>
-  <b>Type:</b>
-  <%= @asset_list.type_id %>
-</p>
 
-<p>
-  <b>Location:</b>
-  <%= @asset_list.location_id %>
-</p>
+<hr/>
+<h3>アイテムの詳細情報</h3>
 
-<p>
-  <b>Flag:</b>
-  <%= @asset_list.flag %>
-</p>
+<table class="table assets">
+  <tbody>
+    <tr>
+      <th>基本価格</th>
+      <td><%= number_with_delimiter @asset.try(:item).try(:base_price) %></td>
+    </tr>
+    <tr>
+      <th>商品概要</th>
+      <td><%= @asset.try(:item).try(:description_ja_text) %></td>
+    </tr>
+  </tbody>
+</table>
 
 
-<%= link_to 'Back', asset_lists_path %>
+<center>
+<%= link_to asset_lists_path, class: 'btn' do %>
+  <i class="icon-chevron-left"></i> 在庫マスタ一覧へ戻る
+<% end %>
+</center>
