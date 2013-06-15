@@ -1,14 +1,10 @@
 Nejpms::Application.routes.draw do
   resources :costs
 
-
   resources :product_results
-
 
   resources :user_lists
 
-
-  resources :asset_lists
   resources :asset_lists do
     collection do
       post 'search'
@@ -17,10 +13,7 @@ Nejpms::Application.routes.draw do
 
   resources :blue_print_purchases
 
-
   resources :material_purchases
-
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -71,7 +64,7 @@ Nejpms::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'home#index'
 
   # See how all your routes lay out with "rake routes"
 
