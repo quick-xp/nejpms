@@ -8,6 +8,6 @@ class TrnTranslations
   property :tc_id, Serial, field: 'tcID', required: true, key: true
   property :key_id, Serial, field: 'keyID', required: true, key: true
   property :language_id, String, field: 'languageID'
-  property :text, Text, field: 'text'
+  property :text, Text, field: 'text', lazy: false
 
 end

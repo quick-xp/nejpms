@@ -27,7 +27,8 @@ class AssetLists
   end
 
   def get_type_name
-    self.try(:item).try(:type_name)
+    # FIXME n+1 query問題発生中
+    self.try(:item).try(:type_name_ja).try(:text)
   end
 
   def get_station_name

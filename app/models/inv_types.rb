@@ -19,4 +19,10 @@ class InvTypes
   property :market_group_id, Integer, field: 'marketGroupID'
   property :chance_of_duplicating, Float, field: 'chanceOfduplicating'
 
+  belongs_to :type_name_ja, 'TrnTranslations',
+    parent_key: [ :key_id ],
+    child_key: [ :type_id ],
+    tc_id: '8',
+    language_id: 'JA'
+
 end
