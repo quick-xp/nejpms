@@ -13,7 +13,7 @@ class WalletTransactions
   property :clientID,Integer, field: 'clientID'
   property :clientName,String, field: 'clientName'
   property :stationID,Integer, field: 'stationID'
-  property :stationName,String, field: 'stationName'
+  property :stationName,String,length:100, field: 'stationName'
   property :transactionType,String, field: 'transactionType'
   property :transactionFor,String, field: 'transactionFor'
   property :journalTransactionID,String, field: 'journalTransactionID'
