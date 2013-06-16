@@ -3,6 +3,7 @@
 class ManufacturingCostsController < ApplicationController
 
   def index
+    @costs = ManufacturingCosts.costs
   end
 
 end
