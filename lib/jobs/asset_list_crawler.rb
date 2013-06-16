@@ -22,30 +22,55 @@ class Jobs::AssetListCrawler
 
   def persist_asset_list(xml)
 
-    #todo : インベントリ取得対象が複数ロケーションある場合は改修が必須
     puts "insert asset list : itemID"
     AssetLists.all.destroy
 
     temp = xml.result.rowset.row
-    temp.map do |t|
-      puts t.typeID
-     if t.typeID == "27" then
+    flg = 0
 
-      puts t.typeID
-      location_id = t.locationID
-      transactions = t.rowset.map do |tran|
-        AssetLists.new(item_id: tran.itemID,
-                       location_id: location_id,
-                       quantity: tran.quantity,
-                       type_id: tran.typeID,
-                       flag: tran.flag)
-
-      end
-
-    AssetLists.bulk_persist! transactions
-     end
+    begin
+      temp.to_ary
+    rescue
+      flg = 1
     end
 
+    if flg ==0 then
+      temp.map do |t|
+        puts t.typeID
+        if t.typeID == "27" then
+
+          puts t.typeID
+          location_id = t.locationID
+          transactions = t.rowset.map do |tran|
+            AssetLists.new(item_id: tran.itemID,
+                           location_id: location_id,
+                           quantity: tran.quantity,
+                           type_id: tran.typeID,
+                           flag: tran.flag)
+
+          end
+
+          AssetLists.bulk_persist! transactions
+        end
+      end
+    else
+      t = temp
+      puts t.typeID
+      if t.typeID == "27" then
+        puts t.typeID
+        location_id = t.locationID
+        transactions = t.rowset.map do |tran|
+          AssetLists.new(item_id: tran.itemID,
+                         location_id: location_id,
+                         quantity: tran.quantity,
+                         type_id: tran.typeID,
+                         flag: tran.flag)
+
+        end
+
+        AssetLists.bulk_persist! transactions
+      end
+    end
   end
 
   def fetch(keyID,verifyCode)
