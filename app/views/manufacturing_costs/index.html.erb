@@ -1,0 +1,28 @@
+<h1>製品原価確認</h1>
+
+<table id="asset-list-table">
+<thead>
+  <tr>
+    <th>アイテムID</th>
+    <th>アイテム名</th>
+    <th>一つあたりの価格(isk)</th>
+    <th>生産数合計</th>
+    <th>金額合計(isk)</th>
+  </tr>
+</thead>
+
+<tbody>
+<% @costs.each do |cost| %>
+  <tr>
+    <td><%= cost.item_id %></td>
+    <td><%= cost.item_name %></td>
+    <td><%= cost.price %></td>
+    <td><%= cost.create_count %></td>
+    <td><%= cost.sum_price %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
+<br />
+
