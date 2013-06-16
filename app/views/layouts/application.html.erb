@@ -59,18 +59,7 @@
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">購買管理</li>
-              <li><%= link_to "原料仕入れマスタ", material_purchases_path %></li>
-              <li> <%= link_to "設計図仕入れマスタ", blue_print_purchases_path %></li>
-
-              <li class="nav-header">在庫管理</li>
-              <li><%= link_to "在庫マスタ", asset_lists_path %></li>
-
-              <li class="nav-header">生産管理</li>
-              <li><%= link_to "生産実績マスタ", product_results_path %></li>
-
-              <li class="nav-header">マスタ管理</li>
-              <li><%= link_to "ユーザ管理", user_lists_path %></li>
+              <%= render "layouts/sidebar" %>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
