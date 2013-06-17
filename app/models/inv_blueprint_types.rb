@@ -23,4 +23,11 @@ class InvBlueprintTypes
     parent_key: [ :type_id ],
     child_key: [ :product_type_id ]
 
+
+  # 生産可能な設計図
+  def self.producible_blueprints
+    blueprint_ids = BluePrintPurchase.all.map(&:type_id)
+    all(:id => blueprint_ids)
+  end
+
 end
