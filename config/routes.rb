@@ -18,8 +18,8 @@ Nejpms::Application.routes.draw do
   resources :manufacturing_costs, only: [:index]
 
   resources :material_shortages, only: [:index, :show] do
-    member do
-      get :confirm
+    collection do
+      post :confirm
     end
   end
 
