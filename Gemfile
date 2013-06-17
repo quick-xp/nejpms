@@ -46,6 +46,7 @@ gem 'draper', '~> 1.2.0'
 gem 'twitter-bootstrap-rails'
 gem 'xml-object'
 gem 'devise'
+gem 'reform'
 
 
 # Gems used only for assets and not required
