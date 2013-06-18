@@ -1,0 +1,58 @@
+<p id="notice"><%= notice %></p>
+
+<h2>原料不足把握</h2>
+
+<table class="table assets">
+  <tbody>
+    <tr>
+      <th>生産商品名</th>
+      <td><%= @item.type_name %> (<%= @item.type_name_ja.text %>)</td>
+    </tr>
+    <tr>
+      <th>生産可能可否</th>
+      <td><span class="label label-info">生産可能</span><span class="label label-important">生産不可</span></td>
+    </tr>
+    <tr>
+      <th>商品概要</th>
+      <td><%= @item.description_ja.text %></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr/>
+
+
+<table id="asset-list-table">
+<thead>
+  <tr>
+    <th>原料状況</th>
+    <th>アイテムID</th>
+    <th>アイテム名</th>
+    <th>在庫数</th>
+    <th>必要量</th>
+  </tr>
+</thead>
+
+<tbody>
+<%# <% @asset_lists.each do |asset_list| %>
+  <tr>
+    <td>
+      <center>
+        <span class="label label-info">充足</span>
+      </center>
+    </td>
+    <td>bbb</td>
+    <td>ccc</td>
+    <td>50</td>
+    <td>222</td>
+  </tr>
+<%# <% end %>
+</tbody>
+</table>
+
+
+<center>
+<%= link_to material_shortages_path, class: 'btn' do %>
+  <i class="icon-chevron-left"></i> 原料把握不足確認画面へ戻る
+<% end %>
+</center>

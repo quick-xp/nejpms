@@ -8,6 +8,7 @@ class MaterialShortagesController < ApplicationController
   end
 
   def show
+    @item = InvTypes.get(params[:id])
   end
 
   def confirm
