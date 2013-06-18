@@ -29,4 +29,12 @@ class InvTypeMaterials
     asset.quantity < requisite_amount_for_create(product_create_count)
   end
 
+  def shortage_count(product_create_count)
+    if shortage_material?(product_create_count)
+      requisite_amount_for_create(product_create_count) - asset.quantity
+    else
+      0
+    end
+  end
+
 end
