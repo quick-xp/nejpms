@@ -2,6 +2,7 @@
 
 <h2>原料不足把握</h2>
 
+<%# FIXME viewの中にドメインがいるので修正する %>
 <table class="table assets">
   <tbody>
     <tr>
@@ -10,7 +11,13 @@
     </tr>
     <tr>
       <th>生産可能可否</th>
-      <td><span class="label label-info">生産可能</span><span class="label label-important">生産不可</span></td>
+      <td>
+        <% if @materials.any? { |m| m.shortage_material?(@create_count) } || @materials.empty? %>
+        <span class="label label-important">生産不可</span>
+        <% else %>
+        <span class="label label-info">生産可能</span>
+        <% end %>
+      </td>
     </tr>
     <tr>
       <th>商品概要</th>
@@ -25,8 +32,9 @@
 <table id="asset-list-table">
 <thead>
   <tr>
-    <th>原料状況</th>
-    <th>アイテムID</th>
+    <th width="60px">状況</th>
+    <th width="60px">アイテムID</th>
+    <th>アイテム名(英語)</th>
     <th>アイテム名</th>
     <th>在庫数</th>
     <th>必要量</th>
@@ -34,19 +42,24 @@
 </thead>
 
 <tbody>
-<%# <% @asset_lists.each do |asset_list| %>
+<% @materials.each do |material| %>
   <tr>
     <td>
       <center>
-        <span class="label label-info">充足</span>
+        <% if material.shortage_material?(@create_count) %>
+          <span class="label label-important">不足</span>
+        <% else %>
+          <span class="label label-info">充足</span>
+        <% end %>
       </center>
     </td>
-    <td>bbb</td>
-    <td>ccc</td>
-    <td>50</td>
-    <td>222</td>
+    <td><%= material.try(:material).try(:type_id) %></td>
+    <td><%= material.try(:material).try(:type_name) %></td>
+    <td><%= material.try(:material).try(:type_name_ja).try(:text) %></td>
+    <td><%= material.try(:asset).try(:quantity) %></td>
+    <td><%= material.requisite_amount_for_create(@create_count) %></td>
   </tr>
-<%# <% end %>
+<% end %>
 </tbody>
 </table>
 

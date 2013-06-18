@@ -9,6 +9,8 @@ class MaterialShortagesController < ApplicationController
 
   def show
     @item = InvTypes.get(params[:id])
+    @materials = InvTypeMaterials.all(type_id: @item.type_id)
+    @create_count = params[:count].to_i
   end
 
   def confirm
