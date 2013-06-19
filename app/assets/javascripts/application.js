@@ -16,3 +16,5 @@
 //= require dataTables/jquery.dataTables.bootstrap
 //= require twitter/bootstrap
 //= require_tree .
+//= require highcharts
+//= require exporting
