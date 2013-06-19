@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Transaction:</b>
+  <%= @product_sale.transaction_id %>
+</p>
+
+<p>
+  <b>Quantity:</b>
+  <%= @product_sale.quantity %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @product_sale.item.type_name %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @product_sale.price %>
+</p>
+
+<p>
+  <b>Client:</b>
+  <%= @product_sale.client_id %>
+</p>
+
+<p>
+  <b>Station:</b>
+  <%= @product_sale.sta.station_name %>
+</p>
+
+<p>
+  <b>Journal transaction:</b>
+  <%= @product_sale.journal_transaction_id %>
+  </p>
+
+<p>
+  <b>Transaction date time:</b>
+  <%= @product_sale.transaction_date_time %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_product_sale_path(@product_sale) %> |
+<%= link_to 'Back', product_sales_path %>
