@@ -1,4 +1,7 @@
 Nejpms::Application.routes.draw do
+  resources :product_sales
+
+
   resources :costs
 
   resources :product_results
