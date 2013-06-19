@@ -1,0 +1,24 @@
+<h2>原料不足把握</h2>
+
+<%= form_for @form, url: { action: :confirm } do |f| %>
+  <% if @form.errors.any? %>
+    <div id="error_explanation">
+      <h2>入力値が不正です</h2>
+      <ul>
+      <% @form.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "生産したい商品" %>
+    <%= f.collection_select :item_id,  @producible_items, :type_id, :type_name %>
+  </div>
+  <div class="field">
+    <%= f.label "数量" %>
+    <%= f.text_field :count %>
+  </div>
+  <%= f.submit "確認する", class: 'btn' %>
+<% end %>

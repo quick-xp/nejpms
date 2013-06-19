@@ -145,7 +145,10 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.1)
     mime-types (1.23)
+    mini_portile (0.5.0)
     multi_json (1.7.6)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
     orm_adapter (0.4.0)
     polyglot (0.3.3)
     pry (0.9.12.2)
@@ -182,6 +185,12 @@ GEM
     rake (10.0.4)
     rdoc (3.12.2)
       json (~> 1.4)
+    reform (0.1.2)
+      activemodel
+      representable (>= 1.5.3)
+    representable (1.5.3)
+      multi_json
+      nokogiri
     request_store (1.0.5)
     rspec-core (2.13.1)
     rspec-expectations (2.13.0)
@@ -275,6 +284,7 @@ DEPENDENCIES
   pry-doc
   pry-rails
   railties (~> 3.2.13)
+  reform
   rspec-rails (~> 2.0)
   sass-rails (~> 3.2.5)
   strong_parameters
