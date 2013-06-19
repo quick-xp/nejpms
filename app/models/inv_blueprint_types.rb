@@ -4,7 +4,7 @@ class InvBlueprintTypes
 
   include DataMapper::Resource
 
-  storage_names[:default] = 'InvBlueprintTypes'
+  storage_names[:default] = 'invBlueprintTypes'
 
   property :id, Serial, field: 'blueprintTypeID', key: true, required:true
   property :parent_blueprint_type_id, Integer, field: 'parentBlueprintTypeID'
