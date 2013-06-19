@@ -61,6 +61,7 @@ group :assets do
   gem 'bootstrap-datepicker-rails', '~> 0.6.8'
   gem 'therubyracer', '~> 0.10.2', :platform => :ruby
   gem 'jquery-datatables-rails'
+  gem 'highcharts-rails'
 end
 
 group :test, :development do
