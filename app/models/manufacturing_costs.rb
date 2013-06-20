@@ -5,6 +5,7 @@ class ManufacturingCosts
 
   attribute :item_id, Integer
   attribute :item_name, String
+  attribute :item_name_ja, String
   attribute :price, Float
   attribute :create_count, String
   attribute :sum_price, Float
@@ -15,7 +16,8 @@ class ManufacturingCosts
     sql = <<-EOF
       select
         pr.typeID as item_id,
-        trn.text as item_name,
+        inv.typeName as item_name,
+        trn.text as item_name_ja,
         (sum(pr.sumPrice) / sum(pr.createCount)) as price,
         sum(pr.createCount) as create_count,
         sum(pr.sumPrice) as sum_price
