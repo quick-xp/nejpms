@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<h2>在庫詳細</h2>
+
+<table class="table assets">
+  <tbody>
+    <tr>
+      <th>アイテム名</th>
+      <td><%= @asset.type_name %> ( <%= @asset.type_name_ja_text %> )</td>
+    </tr>
+    <tr>
+      <th>在庫</th>
+      <td><%= @transitions.try(:last).try(:current_quantity) %></td>
+    </tr>
+  </tbody>
+</table>
+
+
+<hr />
+
+<%= high_chart("sample", @graph) %>
+
+
+<center>
+<%= link_to inventory_transitions_path, class: 'btn' do %>
+  <i class="icon-chevron-left"></i> 在庫推移一覧へ戻る
+<% end %>
+</center>
