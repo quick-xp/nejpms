@@ -17,4 +17,3 @@
 //= require twitter/bootstrap
 //= require_tree .
 //= require highcharts
-//= require exporting
