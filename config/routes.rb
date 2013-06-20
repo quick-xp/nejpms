@@ -23,6 +23,8 @@ Nejpms::Application.routes.draw do
     end
   end
 
+  resources :inventory_transitions, only: [:index, :show]
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
