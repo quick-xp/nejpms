@@ -1,0 +1,28 @@
+<h1>在庫推移</h1>
+
+<table id="asset-list-table">
+<thead>
+  <tr>
+    <th>アイテムID</th>
+    <th>アイテム名</th>
+    <th>在庫数</th>
+    <th>最終更新日</th>
+    <th></th>
+  </tr>
+</thead>
+
+<tbody>
+<% @assets.each do |asset| %>
+  <tr>
+    <td><%= asset.type_id %></td>
+    <td><%= asset.item_name %></td>
+    <td><%= asset.current_quantity %></td>
+    <td><%= asset.add_date %></td>
+    <td><%= link_to '在庫推移詳細', inventory_transition_path(id: asset.type_id) %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
+<br />
+

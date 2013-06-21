@@ -53,6 +53,7 @@ class Jobs::AssetListCompare
             inv.location_id = new[1]
             inv.count = transition
             inv.add_date = Time.now
+            inv.current_quantity = new[2]
             inv.save
           end
         end
@@ -66,6 +67,7 @@ class Jobs::AssetListCompare
         inv.location_id = new[1]
         inv.count = new[2]
         inv.add_date = Time.now
+        inv.current_quantity = new[2]
         inv.save
       end
     end
@@ -88,6 +90,7 @@ class Jobs::AssetListCompare
         inv.location_id = old[1]
         inv.count = old[2]
         inv.add_date = Time.now
+        inv.current_quantity = 0
         inv.save
       end
     end
