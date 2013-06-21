@@ -29,7 +29,7 @@ class InventoryTransitions
       i1.currentQuantity as current_quantity,
       inv.typeName as item_name
     from
-      inventoryTransition i1
+      InventoryTransition i1
     inner join
       invTypes as inv
     on
@@ -39,7 +39,7 @@ class InventoryTransitions
       select
         *
       from
-        inventoryTransition as i2
+        InventoryTransition as i2
       where
         i2.typeID = i1.typeID
         and i2.id > i1.id
