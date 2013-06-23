@@ -35,6 +35,41 @@ class ProductResultsController < ApplicationController
     end
   end
 
+  # POST /product_results/new2
+  # POST /product_results/new2.json
+  def new2
+    @product_result = ProductResult.new
+    @product_result_item =10.times.map{ ProductResultItem.new }
+
+    type_id = params[:product_result][:type_id]
+
+    @product_result.type_id = type_id
+
+    type_id = InvTypes.first(:type_name => type_id)[:type_id]
+    material_items = InvTypeMaterials.all(:type_id => type_id)
+
+    @product_result_item[0][:type_id] = params[:product_result][:type_id] + " Blueprint"
+    material_items.each_with_index{|material,i|
+      @product_result_item[i+1][:type_id] = InvTypes.first(:type_id => material.material_type_id)[:type_name]
+    }
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @product_result }
+    end
+  end
+
+
+  # GET /product_results/select
+  # GET /product_results/select.json
+  def select
+    @product_result = ProductResult.new
+    @producible_items = InvBlueprintTypes.producible_blueprints.items
+    respond_to do |format|
+      format.html # select.html.erb
+      # format.json { render json: @product_result }
+    end
+  end
+
   # GET /product_results/1/edit
   def edit
     @product_result = ProductResult.get(params[:id])
