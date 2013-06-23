@@ -34,7 +34,11 @@ class InvTypeMaterials
   end
 
   def shortage_material?(product_create_count)
-    asset.quantity < requisite_amount_for_create(product_create_count)
+    if asset.try(:quantity).nil?
+      true
+    else
+      asset.quantity < requisite_amount_for_create(product_create_count)
+    end
   end
 
   def shortage_count(product_create_count)
