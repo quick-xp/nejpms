@@ -21,4 +21,43 @@
     <%= f.text_field :count %>
   </div>
   <%= f.submit "確認する", class: 'btn' %>
+
+  <hr />
+
+  <h2>生産可能製品一覧</h2>
+
+  <table id="asset-list-table">
+    <thead>
+      <tr>
+        <th width="60px">状況</th>
+        <th width="60px">アイテムID</th>
+        <th>アイテム名</th>
+        <th>アイテム名(JA)</th>
+        <th>生産可能数</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <% @producible_items.each do |item| %>
+      <% producible_count = InvTypeMaterials.producible_count(item.type_id) %>
+      <tr>
+      <td>
+        <center>
+          <% if producible_count <= 0 %>
+            <span class="label label-important">生産不可</span>
+          <% else %>
+            <span class="label label-info">生産可能</span>
+        <% end %>
+        </center>
+      </td>
+      <td><%= item.type_id %></td>
+      <td><%= item.try(:type_name) %></td>
+      <td><%= item.try(:type_name_ja).try(:text) %></td>
+      <td><%= producible_count %></td>
+    </tr>
+  <% end %>
+    </tbody>
+  </table>
+
+
 <% end %>
