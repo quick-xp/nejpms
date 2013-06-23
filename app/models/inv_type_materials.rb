@@ -21,6 +21,14 @@ class InvTypeMaterials
     parent_key: [:type_id],
     child_key: [:material_type_id]
 
+  # 指定したアイテムの生産可能数を取得する
+  def self.producible_count(type_id)
+    required_materials = self.all(type_id: type_id)
+    required_materials
+      .map { |r| (r.asset.present? ? r.asset.quantity : 0) / r.quantity }
+      .min
+  end
+
   def requisite_amount_for_create(create_count)
     self.quantity * create_count
   end
