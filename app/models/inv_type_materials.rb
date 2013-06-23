@@ -17,9 +17,10 @@ class InvTypeMaterials
     parent_key: [:type_id],
     child_key: [:material_type_id]
 
-  belongs_to :asset, 'AssetLists',
-    parent_key: [:type_id],
-    child_key: [:material_type_id]
+
+  def asset
+    AssetLists.all(:type_id => self.material_type_id).first
+  end
 
   # 指定したアイテムの生産可能数を取得する
   def self.producible_count(type_id)
@@ -34,7 +35,7 @@ class InvTypeMaterials
   end
 
   def shortage_material?(product_create_count)
-    if asset.try(:quantity).nil?
+    if self.asset.nil?
       true
     else
       asset.quantity < requisite_amount_for_create(product_create_count)
@@ -43,7 +44,11 @@ class InvTypeMaterials
 
   def shortage_count(product_create_count)
     if shortage_material?(product_create_count)
-      requisite_amount_for_create(product_create_count) - asset.quantity
+      if asset.nil?
+        requisite_amount_for_create(product_create_count)
+      else
+        requisite_amount_for_create(product_create_count) - asset.quantity
+      end
     else
       0
     end
