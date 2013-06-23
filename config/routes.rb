@@ -4,7 +4,12 @@ Nejpms::Application.routes.draw do
 
   resources :costs
 
-  resources :product_results
+  resources :product_results do
+    collection do
+      get  :select
+      post  :new2
+    end
+  end
 
   resources :user_lists
 

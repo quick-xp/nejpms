@@ -1,0 +1,25 @@
+<h1>Select New product_result</h1>
+<%= form_for @product_result, url: new2_product_results_path, method: :post do |f| %>
+  <% if @product_result.errors.any? %>
+  <div id="error_explanation">
+  <h2><%= pluralize(@product_result.errors.count, "error") %> prohibited this product_result from being saved:</h2>
+
+  <ul>
+    <% @product_result.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+  <% end %>
+
+<div class="field">
+  <%= f.label :type_id %><br />
+  <%= f.collection_select :type_id,  @producible_items, :type_name, :type_name %>
+</div>
+
+<div class="actions">
+  <%= f.submit("選択") %>
+</div>
+<% end %>
+
+<%= link_to 'Back', product_results_path %>
