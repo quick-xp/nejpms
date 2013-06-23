@@ -20,8 +20,8 @@
   <% @product_sales.each do |product_sale| %>
     <tr>
     <td><%= product_sale.transaction_id %></td>
+    <td><%= product_sale.quantity %></td>
     <td><%= product_sale.get_type_name %></td>
-    <td><%= product_sale.type_id %></td>
     <td><%= product_sale.price %></td>
     <td><%= product_sale.client_id %></td>
     <td><%= product_sale.get_station_name %></td>
