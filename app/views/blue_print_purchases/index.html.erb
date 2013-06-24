@@ -1,27 +1,31 @@
-<h1>Listing blue_print_purchases</h1>
+<h1>設計図仕入れマスタ</h1>
 
-<table>
+<table id="asset-list-table">
+<thead>
   <tr>
-    <th>Type</th>
-    <th>Use count</th>
-    <th>Price</th>
-    <th>Comment</th>
+    <th>設計図</th>
+    <th>利用可能数</th>
+    <th>価格</th>
+    <th>コメント</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
+</thead>
 
+<tbody>
 <% @blue_print_purchases.each do |blue_print_purchase| %>
   <tr>
     <td><%= blue_print_purchase.get_type_name %></td>
     <td><%= blue_print_purchase.use_count %></td>
-    <td><%= blue_print_purchase.price %></td>
+    <td><%= number_with_delimiter blue_print_purchase.price %></td>
     <td><%= blue_print_purchase.comment %></td>
     <td><%= link_to 'Show', blue_print_purchase %></td>
     <td><%= link_to 'Edit', edit_blue_print_purchase_path(blue_print_purchase) %></td>
     <td><%= link_to 'Destroy', blue_print_purchase, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
+</tbody>
 </table>
 
 <br />
