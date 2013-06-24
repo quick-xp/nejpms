@@ -1,27 +1,31 @@
-<h1>Listing product_results</h1>
+<h1>生産実績</h1>
 
-<table>
+<table id="asset-list-table">
+<thead>
   <tr>
-    <th>Type</th>
-    <th>Owner</th>
-    <th>Create count</th>
-    <th>Sum price</th>
+    <th>製品</th>
+    <th>オーナー</th>
+    <th>製造数</th>
+    <th>合計金額</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
+</thead>
 
+<tbody>
 <% @product_results.each do |product_result| %>
   <tr>
     <td><%= product_result.get_type_name%></td>
     <td><%= product_result.user.user_name %></td>
     <td><%= product_result.create_count %></td>
-    <td><%= product_result.sum_price %></td>
+    <td><%= number_with_delimiter product_result.sum_price %></td>
     <td><%= link_to 'Show', product_result %></td>
     <td><%= link_to 'Edit', edit_product_result_path(product_result) %></td>
     <td><%= link_to 'Destroy', product_result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
+</tbody>
 </table>
 
 <br />
