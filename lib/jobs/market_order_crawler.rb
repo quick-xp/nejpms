@@ -8,9 +8,8 @@ class Jobs::MarketOrderCrawler
   def run
     begin
       puts "start MarketOrderCrawler"
-      # TODO Load key from config
-      keyID="2113292"
-      verifyCode ="nv0vGMk45dP3bKy5AfzHyb3iKnGO42d6wnXbdJU4bQ23ujtsEdquLUc6hA5Y8XKT"
+      keyID = Settings.account.key_id
+      verifyCode = Settings.account.verify_code
       #accountKey="1004"
 
       list = Array["1000"]
@@ -59,7 +58,7 @@ class Jobs::MarketOrderCrawler
 
   def fetch(keyID,verifyCode,accountKey)
     # TODO Load uri from config
-    uri = URI.parse("https://api.eveonline.com/corp/MarketOrders.xml.aspx?keyID=#{keyID}&vCode=#{verifyCode}&accountKey=#{accountKey}")
+    uri = URI.parse("#{Settings.url.market_order}?keyID=#{keyID}&vCode=#{verifyCode}&accountKey=#{accountKey}")
 
     http = Net::HTTP.new(uri.host,uri.port)
     http.use_ssl = (uri.scheme == 'https')

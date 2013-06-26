@@ -7,9 +7,8 @@ require 'xml-object'
 class Jobs::AssetListCrawler
   def run
     #begin
-      # TODO Load key from config
-      keyID="2113292"
-      verifyCode ="nv0vGMk45dP3bKy5AfzHyb3iKnGO42d6wnXbdJU4bQ23ujtsEdquLUc6hA5Y8XKT"
+      keyID = Settings.account.key_id
+      verifyCode = Settings.account.verify_code
 
       response = fetch(keyID,verifyCode)
       puts response
@@ -74,8 +73,7 @@ class Jobs::AssetListCrawler
   end
 
   def fetch(keyID,verifyCode)
-    # TODO Load uri from config
-    uri = URI.parse("https://api.eveonline.com/corp/AssetList.xml.aspx?keyID=#{keyID}&vCode=#{verifyCode}")
+    uri = URI.parse("#{Settings.url.asset_list}?keyID=#{keyID}&vCode=#{verifyCode}")
 
     http = Net::HTTP.new(uri.host,uri.port)
     http.use_ssl = (uri.scheme == 'https')
