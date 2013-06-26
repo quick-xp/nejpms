@@ -1,0 +1,80 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Order:</b>
+  <%= @market_order.order_id %>
+</p>
+
+<p>
+  <b>Char:</b>
+  <%= @market_order.char_id %>
+</p>
+
+<p>
+  <b>Station:</b>
+  <%= @market_order.get_station_name %>
+</p>
+
+<p>
+  <b>Vol entered:</b>
+  <%= @market_order.vol_entered %>
+</p>
+
+<p>
+  <b>Vol remaining:</b>
+  <%= @market_order.vol_remaining %>
+</p>
+
+<p>
+  <b>Min volume:</b>
+  <%= @market_order.min_volume %>
+</p>
+
+<p>
+  <b>Order state:</b>
+  <%= @market_order.order_state %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @market_order.get_type_name %>
+</p>
+
+<p>
+  <b>Range:</b>
+  <%= @market_order.range %>
+</p>
+
+<p>
+  <b>Account key:</b>
+  <%= @market_order.account_key %>
+</p>
+
+<p>
+  <b>Duration:</b>
+  <%= @market_order.duration %>
+</p>
+
+<p>
+  <b>Escrow:</b>
+  <%= @market_order.escrow %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @market_order.price %>
+</p>
+
+<p>
+  <b>Bid:</b>
+  <%= @market_order.bid %>
+</p>
+
+<p>
+  <b>Issue:</b>
+  <%= @market_order.issue %>
+</p>
+
+
+<%= link_to 'Edit', edit_market_order_path(@market_order) %> |
+<%= link_to 'Back', market_orders_path %>

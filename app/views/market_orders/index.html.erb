@@ -1,0 +1,72 @@
+<h1>Listing market_orders</h1>
+
+<h3> Sell Orders </h3>
+<table id="market_orders-table">
+  <thead>
+    <tr>
+      <th>Order</th>
+      <th>Char</th>
+      <th>Station</th>
+      <th>Vol entered</th>
+      <th>Vol remaining</th>
+      <th>Type</th>
+      <th>Duration</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @market_orders.each do |market_order| %>
+    <tr>
+    <td><%= market_order.order_id %></td>
+    <td><%= market_order.char_id %></td>
+    <td><%= market_order.get_station_name %></td>
+    <td><%= market_order.vol_entered %></td>
+    <td><%= market_order.vol_remaining %></td>
+    <td><%= market_order.get_type_name %></td>
+    <td><%= market_order.duration %></td>
+    <td><%= market_order.price %></td>
+    <td><%= link_to 'Show', market_order %></td>
+  </tr>
+<% end %>
+  </tbody>
+</table>
+
+<br />
+<br />
+
+<h3> Buy Orders </h3>
+<table id="market_orders2-table">
+  <thead>
+    <tr>
+      <th>Order</th>
+      <th>Char</th>
+      <th>Station</th>
+      <th>Vol entered</th>
+      <th>Vol remaining</th>
+      <th>Type</th>
+      <th>Duration</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @market_orders_buy.each do |market_order| %>
+    <tr>
+    <td><%= market_order.order_id %></td>
+    <td><%= market_order.char_id %></td>
+    <td><%= market_order.get_station_name %></td>
+    <td><%= market_order.vol_entered %></td>
+    <td><%= market_order.vol_remaining %></td>
+    <td><%= market_order.get_type_name %></td>
+    <td><%= market_order.duration %></td>
+    <td><%= market_order.price %></td>
+    <td><%= link_to 'Show', market_order %></td>
+  </tr>
+<% end %>
+  </tbody>
+</table>
+
+

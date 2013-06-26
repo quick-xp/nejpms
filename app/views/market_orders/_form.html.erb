@@ -1,0 +1,81 @@
+<%= form_for(@market_order) do |f| %>
+  <% if @market_order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@market_order.errors.count, "error") %> prohibited this market_order from being saved:</h2>
+
+      <ul>
+      <% @market_order.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :order_id %><br />
+    <%= f.text_field :order_id %>
+  </div>
+  <div class="field">
+    <%= f.label :char_id %><br />
+    <%= f.text_field :char_id %>
+  </div>
+  <div class="field">
+    <%= f.label :station_id %><br />
+    <%= f.text_field :station_id %>
+  </div>
+  <div class="field">
+    <%= f.label :vol_entered %><br />
+    <%= f.text_field :vol_entered %>
+  </div>
+  <div class="field">
+    <%= f.label :vol_remaining %><br />
+    <%= f.text_field :vol_remaining %>
+  </div>
+  <div class="field">
+    <%= f.label :min_volume %><br />
+    <%= f.text_field :min_volume %>
+  </div>
+  <div class="field">
+    <%= f.label :order_state %><br />
+    <%= f.text_field :order_state %>
+  </div>
+  <div class="field">
+    <%= f.label :order_state %><br />
+    <%= f.text_field :order_state %>
+  </div>
+  <div class="field">
+    <%= f.label :type_id %><br />
+    <%= f.text_field :type_id %>
+  </div>
+  <div class="field">
+    <%= f.label :range %><br />
+    <%= f.text_field :range %>
+  </div>
+  <div class="field">
+    <%= f.label :account_key %><br />
+    <%= f.text_field :account_key %>
+  </div>
+  <div class="field">
+    <%= f.label :duration %><br />
+    <%= f.text_field :duration %>
+  </div>
+  <div class="field">
+    <%= f.label :escrow %><br />
+    <%= f.text_field :escrow %>
+  </div>
+  <div class="field">
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+  </div>
+  <div class="field">
+    <%= f.label :bid %><br />
+    <%= f.text_field :bid %>
+  </div>
+  <div class="field">
+    <%= f.label :issue %><br />
+    <%= f.text_field :issue %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
