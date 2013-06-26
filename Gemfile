@@ -47,6 +47,7 @@ gem 'twitter-bootstrap-rails'
 gem 'xml-object'
 gem 'devise'
 gem 'reform'
+gem 'settingslogic'
 
 
 # Gems used only for assets and not required
