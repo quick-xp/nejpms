@@ -13,7 +13,7 @@ class Jobs::MarketOrderCrawler
       verifyCode ="nv0vGMk45dP3bKy5AfzHyb3iKnGO42d6wnXbdJU4bQ23ujtsEdquLUc6hA5Y8XKT"
       #accountKey="1004"
 
-      list = Array["1000","1001","1002","1003","1004","1005","1006"]
+      list = Array["1000"]
       list.each {|accountKey|
         response = fetch(keyID,verifyCode,accountKey)
         puts response

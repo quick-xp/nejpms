@@ -40,10 +40,17 @@ class MarketOrder
       transaction.each do |tran|
         begin
           if MarketOrder.first(:order_id => tran.order_id) == nil then
-           puts tran.order_id.to_s + " is save"
-           tran.save
+            puts tran.order_id.to_s + " is save"
+            tran.save
           else
-            puts tran.order_id.to_s + " is already saved"
+            order = MarketOrder.first(:order_id => tran.order_id)
+            if order.vol_remaining != tran.vol_remaining then
+              order.destroy
+              tran.save
+              puts tran.order_id.to_s + " is update"
+            else
+              puts tran.order_id.to_s + " is already saved"
+            end
           end
         rescue => e
           puts "DB登録の際にエラーが発生しました"
