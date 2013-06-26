@@ -23,10 +23,10 @@
     <td><%= market_order.char_id %></td>
     <td><%= market_order.get_station_name %></td>
     <td><%= market_order.vol_entered %></td>
-    <td><%= market_order.vol_remaining %></td>
+    <td><%= number_with_delimiter market_order.vol_remaining %></td>
     <td><%= market_order.get_type_name %></td>
     <td><%= market_order.duration %></td>
-    <td><%= market_order.price %></td>
+    <td><%= number_with_delimiter market_order.price %></td>
     <td><%= link_to 'Show', market_order %></td>
   </tr>
 <% end %>
@@ -59,10 +59,10 @@
     <td><%= market_order.char_id %></td>
     <td><%= market_order.get_station_name %></td>
     <td><%= market_order.vol_entered %></td>
-    <td><%= market_order.vol_remaining %></td>
+    <td><%= number_with_delimiter market_order.vol_remaining %></td>
     <td><%= market_order.get_type_name %></td>
     <td><%= market_order.duration %></td>
-    <td><%= market_order.price %></td>
+    <td><%= number_with_delimiter market_order.price %></td>
     <td><%= link_to 'Show', market_order %></td>
   </tr>
 <% end %>
