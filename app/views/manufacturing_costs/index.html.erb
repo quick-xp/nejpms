@@ -6,7 +6,8 @@
     <th>アイテムID</th>
     <th>アイテム名</th>
     <th>アイテム名(JA)</th>
-    <th>一つあたりの価格(isk)</th>
+    <th>製品原価(合計)</th>
+    <th>製品原価(過去3回分)</th>
     <th>生産数合計</th>
     <th>金額合計(isk)</th>
   </tr>
@@ -19,6 +20,7 @@
     <td><%= cost.item_name %></td>
     <td><%= cost.item_name_ja %></td>
     <td><%= number_with_delimiter cost.price %></td>
+    <td><%= number_with_delimiter cost.price_of_top_n %></td>
     <td><%= cost.create_count %></td>
     <td><%= number_with_delimiter cost.sum_price %></td>
   </tr>
