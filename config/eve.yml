@@ -1,0 +1,15 @@
+default: &default
+  account:
+    key_id: '2113292'
+    verify_code: 'nv0vGMk45dP3bKy5AfzHyb3iKnGO42d6wnXbdJU4bQ23ujtsEdquLUc6hA5Y8XKT'
+  url:
+    asset_list: 'https://api.eveonline.com/corp/AssetList.xml.aspx'
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
