@@ -1,13 +1,13 @@
-<h1>Listing material_purchases</h1>
+<h1>原料仕入れマスタ</h1>
 
 <table id="purchases-table">
 <thead>
   <tr>
     <th>Transaction</th>
-    <th>Type</th>
-    <th>Quantity</th>
-    <th>Price</th>
-    <th>Station</th>
+    <th>原料名</th>
+    <th>数量</th>
+    <th>価格</th>
+    <th>ステーション</th>
     <th></th>
     <th></th>
     <th></th>
@@ -20,7 +20,7 @@
     <td><%= material_purchase.transaction_id %></td>
     <td><%= material_purchase.get_type_name %></td>
     <td><%= material_purchase.quantity %></td>
-    <td><%= material_purchase.price %></td>
+    <td><%= number_with_delimiter material_purchase.price %></td>
     <td><%= material_purchase.get_station_name %></td>
     <td><%= link_to 'Show', material_purchase %></td>
     <td><%= link_to 'Edit', edit_material_purchase_path(material_purchase) %></td>

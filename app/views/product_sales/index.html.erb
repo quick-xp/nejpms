@@ -22,7 +22,7 @@
     <td><%= product_sale.transaction_id %></td>
     <td><%= product_sale.quantity %></td>
     <td><%= product_sale.get_type_name %></td>
-    <td><%= product_sale.price %></td>
+    <td><%= number_with_delimiter product_sale.price %></td>
     <td><%= product_sale.client_id %></td>
     <td><%= product_sale.get_station_name %></td>
     <td><%= product_sale.journal_transaction_id %></td>
