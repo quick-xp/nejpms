@@ -1,0 +1,53 @@
+<h1>財務記録</h1>
+
+<table id="asset-list-table">
+<thead>
+  <tr>
+    <th>Transaction</th>
+    <th>Transaction date time</th>
+    <th>Transaction type</th>
+    <th>Amount</th>
+    <th>Balance</th>
+    <th>Owner name1</th>
+    <th>Owner id1</th>
+    <th>Owner name2</th>
+    <th>Owner id2</th>
+    <th>Arg name1</th>
+    <th>Arg id1</th>
+    <th>Reason</th>
+    <th>Tax receiver</th>
+    <th>Tax amount</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+</thead>
+
+<tbody>
+<% @wallet_journals.each do |wallet_journal| %>
+  <tr>
+    <td><%= wallet_journal.transaction_id %></td>
+    <td><%= wallet_journal.transaction_date_time %></td>
+    <td><%= wallet_journal.transaction_type_id %></td>
+    <td><%= wallet_journal.amount %></td>
+    <td><%= wallet_journal.balance %></td>
+    <td><%= wallet_journal.owner_name1 %></td>
+    <td><%= wallet_journal.owner_id1 %></td>
+    <td><%= wallet_journal.owner_name2 %></td>
+    <td><%= wallet_journal.owner_id2 %></td>
+    <td><%= wallet_journal.arg_name1 %></td>
+    <td><%= wallet_journal.arg_id1 %></td>
+    <td><%= wallet_journal.reason %></td>
+    <td><%= wallet_journal.tax_receiver_id %></td>
+    <td><%= wallet_journal.tax_amount %></td>
+    <td><%= link_to 'Show', wallet_journal %></td>
+    <td><%= link_to 'Edit', edit_wallet_journal_path(wallet_journal) %></td>
+    <td><%= link_to 'Destroy', wallet_journal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Wallet journal', new_wallet_journal_path %>

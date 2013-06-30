@@ -1,0 +1,75 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Transaction:</b>
+  <%= @wallet_journal.transaction_id %>
+</p>
+
+<p>
+  <b>Transaction date time:</b>
+  <%= @wallet_journal.transaction_date_time %>
+</p>
+
+<p>
+  <b>Transaction type:</b>
+  <%= @wallet_journal.transaction_type_id %>
+</p>
+
+<p>
+  <b>Owner name1:</b>
+  <%= @wallet_journal.owner_name1 %>
+</p>
+
+<p>
+  <b>Owner id1:</b>
+  <%= @wallet_journal.owner_id1 %>
+</p>
+
+<p>
+  <b>Owner name2:</b>
+  <%= @wallet_journal.owner_name2 %>
+</p>
+
+<p>
+  <b>Owner id2:</b>
+  <%= @wallet_journal.owner_id2 %>
+</p>
+
+<p>
+  <b>Arg name1:</b>
+  <%= @wallet_journal.arg_name1 %>
+</p>
+
+<p>
+  <b>Arg id1:</b>
+  <%= @wallet_journal.arg_id1 %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%= @wallet_journal.amount %>
+</p>
+
+<p>
+  <b>Balance:</b>
+  <%= @wallet_journal.balance %>
+</p>
+
+<p>
+  <b>Reason:</b>
+  <%= @wallet_journal.reason %>
+</p>
+
+<p>
+  <b>Tax receiver:</b>
+  <%= @wallet_journal.tax_receiver_id %>
+</p>
+
+<p>
+  <b>Tax amount:</b>
+  <%= @wallet_journal.tax_amount %>
+</p>
+
+
+<%= link_to 'Edit', edit_wallet_journal_path(@wallet_journal) %> |
+<%= link_to 'Back', wallet_journals_path %>
