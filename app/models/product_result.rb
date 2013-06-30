@@ -34,5 +34,27 @@ class ProductResult
     end
   end
 
+  def get_total_product_amount(type_id)
+    products = ProductResult.all
+    total = 0
+    products.each {|product|
+      if type_id == product.type_id
+        total += product.sum_price
+      end
+    }
+    return total
+  end
+
+  def get_total_product_count(type_id)
+    products = ProductResult.all
+    total = 0
+    products.each {|product|
+      if type_id == product.type_id
+        total += product.create_count
+      end
+    }
+    return total
+  end
+
 
 end

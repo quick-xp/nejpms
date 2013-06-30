@@ -35,6 +35,32 @@ class MarketOrder
     self.try(:station).try(:station_name)
   end
 
+  # 販売中の在庫を原価で評価
+  def get_total_amount_market_sell
+    sell_orders = MarketOrder.all(:order_state => 0)
+    m_costs = ManufacturingCosts.costs_of_top(3)
+    total_costs = 0.0
+
+    if not sell_orders.nil?
+      sell_orders.each{ |sell_order|
+        #binding.pry
+        # cost を求める
+        original_cost = 0.0
+        m_costs.each{ |m|
+          if m.item_id == sell_order.type_id
+            original_cost = m.price
+          end
+        }
+        # total_cost を求める
+        individual_total_cost = original_cost * sell_order.vol_remaining
+        puts "item : " + sell_order.type_id.to_s + " price: " + individual_total_cost.to_s
+        total_costs += individual_total_cost
+      }
+    end
+
+    total_costs
+  end
+
   class << self
     def bulk_persist!(transaction)
       transaction.each do |tran|

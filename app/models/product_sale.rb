@@ -38,5 +38,35 @@ class ProductSale
     end
   end
 
+  def get_total_sales_amounts
+    sales = ProductSale.all
+    total = 0
+    sales.each {|sale|
+      total += sale.price * sale.quantity
+    }
+    return total
+  end
+
+  def get_total_sales_amount(type_id)
+    sales = ProductSale.all
+    total = 0
+    sales.each {|sale|
+      if type_id == sale.type_id
+        total += sale.price * sale.quantity
+      end
+    }
+    return total
+  end
+
+  def get_total_sales_count(type_id)
+    sales = ProductSale.all
+    total = 0
+    sales.each {|sale|
+      if type_id == sale.type_id
+        total += sale.type_id
+      end
+    }
+    return total
+  end
 
 end

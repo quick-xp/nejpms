@@ -1,4 +1,7 @@
 Nejpms::Application.routes.draw do
+  resources :management_accounts
+
+
   resources :market_orders
 
 

@@ -43,4 +43,24 @@ class MaterialPurchase
     end
   end
 
+  def get_total_purchase_amounts
+    material_purchases = MaterialPurchase.all
+    total = 0
+    material_purchases.each {|material_purchase|
+      total += material_purchase.quantity * material_purchase.price
+    }
+    return total
+  end
+
+  def get_total_purchase_amount(type_id)
+    material_purchases = MaterialPurchase.all
+    total = 0
+    material_purchases.each {|material_purchase|
+      if type_id == material_purchase.type_id
+        total += material_purchase.quantity * material_purchase.price
+      end
+    }
+    return total
+  end
+
 end

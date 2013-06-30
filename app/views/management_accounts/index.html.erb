@@ -1,0 +1,62 @@
+
+<p id="notice"><%= notice %></p>
+
+<h2>財務状況</h2>
+<table class="table assets">
+  <tbody>
+    <tr>
+      <th>仕入高</th>
+      <td><%= number_with_delimiter @management_account.purchase_amount %></td>
+    </tr>
+    <tr>
+      <th>売上高</th>
+      <td> <%= number_with_delimiter @management_account.sales_amount %></td>
+    </tr>
+    <tr>
+      <th>在庫評価額</th>
+      <td> <%= number_with_delimiter @management_account.inventory_amount %> </td>
+    </tr>
+    <tr>
+      <th>販売残高</th>
+      <td><%= number_with_delimiter @management_account.remain_sales_amount %></td>
+    </tr>
+  </tbody>
+</table>
+
+<br/>
+<h2>品目別利益一覧</h2>
+<table id="asset-list-table">
+<thead>
+  <tr>
+    <th>アイテム名(EN)</th>
+    <th>原料費</th>
+    <th>生産数</th>
+    <th>売上高</th>
+    <th>売上数</th>
+    <th>利益</th>
+    <th>１個当たり利益</th>
+    <th>平均生産原価</th>
+    <th>平均販売金額</th>
+    <th>１生産当たり利益</th>
+  </tr>
+</thead>
+
+<tbody>
+<% @detail_lists.each do |list| %>
+  <tr>
+    <td><%= list.type_name %></td>
+    <td><%= number_with_delimiter list.product_amount %></td>
+    <td><%= number_with_delimiter list.product_count %></td>
+    <td><%= number_with_delimiter list.sales_amount %></td>
+    <td><%= number_with_delimiter list.sales_count %></td>
+    <td><%= number_with_precision list.total_profit,:delimiter =>",",:precision =>2 %></td>
+    <td><%= number_with_precision list.per_profit,:delimiter =>"," ,:precision=> 2 %></td>
+    <td><%= number_with_precision list.product_count,:delimiter =>",",:precision=> 2 %></td>
+    <td><%= number_with_precision list.per_sales_amount,:delimiter =>",", :precision=> 2 %></td>
+    <td><%= number_with_precision list.per_product_profit,:delimiter =>",",:precision=> 2 %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
+

@@ -30,5 +30,14 @@ class BluePrintPurchase
     end
   end
 
+  def get_total_blueprint_amount
+    purchases = BluePrintPurchase.all
+    total = 0
+    purchases.each {|purchase|
+      total += purchase.price
+    }
+    return total
+  end
+
 
 end

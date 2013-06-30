@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Purchase amount:</b>
+  <%= @management_account.purchase_amount %>
+</p>
+
+<p>
+  <b>Sales amount:</b>
+  <%= @management_account.sales_amount %>
+</p>
+
+<p>
+  <b>Inventory amount:</b>
+  <%= @management_account.inventory_amount %>
+</p>
+
+
+<%= link_to 'Edit', edit_management_account_path(@management_account) %> |
+<%= link_to 'Back', management_accounts_path %>
