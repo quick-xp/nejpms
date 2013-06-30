@@ -5,6 +5,7 @@ default: &default
   url:
     asset_list: 'https://api.eveonline.com/corp/AssetList.xml.aspx'
     market_order: 'https://api.eveonline.com/corp/MarketOrders.xml.aspx'
+    wallet_journal: 'https://api.eveonline.com/corp/WalletJournal.xml.aspx'
 
 development:
   <<: *default
