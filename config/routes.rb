@@ -1,6 +1,7 @@
 Nejpms::Application.routes.draw do
   resources :management_accounts
 
+  resources :wallet_journals
 
   resources :market_orders
 

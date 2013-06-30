@@ -1,0 +1,73 @@
+<%= form_for(@wallet_journal) do |f| %>
+  <% if @wallet_journal.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@wallet_journal.errors.count, "error") %> prohibited this wallet_journal from being saved:</h2>
+
+      <ul>
+      <% @wallet_journal.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :transaction_id %><br />
+    <%= f.text_field :transaction_id %>
+  </div>
+  <div class="field">
+    <%= f.label :transaction_date_time %><br />
+    <%= f.text_field :transaction_date_time %>
+  </div>
+  <div class="field">
+    <%= f.label :transaction_type_id %><br />
+    <%= f.text_field :transaction_type_id %>
+  </div>
+  <div class="field">
+    <%= f.label :owner_name1 %><br />
+    <%= f.text_field :owner_name1 %>
+  </div>
+  <div class="field">
+    <%= f.label :owner_id1 %><br />
+    <%= f.text_field :owner_id1 %>
+  </div>
+  <div class="field">
+    <%= f.label :owner_name2 %><br />
+    <%= f.text_field :owner_name2 %>
+  </div>
+  <div class="field">
+    <%= f.label :owner_id2 %><br />
+    <%= f.text_field :owner_id2 %>
+  </div>
+  <div class="field">
+    <%= f.label :arg_name1 %><br />
+    <%= f.text_field :arg_name1 %>
+  </div>
+  <div class="field">
+    <%= f.label :arg_id1 %><br />
+    <%= f.text_field :arg_id1 %>
+  </div>
+  <div class="field">
+    <%= f.label :amount %><br />
+    <%= f.text_field :amount %>
+  </div>
+  <div class="field">
+    <%= f.label :balance %><br />
+    <%= f.text_field :balance %>
+  </div>
+  <div class="field">
+    <%= f.label :reason %><br />
+    <%= f.text_field :reason %>
+  </div>
+  <div class="field">
+    <%= f.label :tax_receiver_id %><br />
+    <%= f.text_field :tax_receiver_id %>
+  </div>
+  <div class="field">
+    <%= f.label :tax_amount %><br />
+    <%= f.text_field :tax_amount %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
