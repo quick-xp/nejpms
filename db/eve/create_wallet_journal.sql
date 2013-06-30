@@ -7,7 +7,7 @@ CREATE TABLE `WalletJournal` (
   `ownerName2` varchar(50) DEFAULT NULL,
   `ownerID2` varchar(50) DEFAULT NULL,
   `argName1` varchar(50) DEFAULT NULL,
-  `argID` varchar(50) DEFAULT NULL,
+  `argID1` varchar(50) DEFAULT NULL,
   `amount` float DEFAULT NULL,
   `balance` float DEFAULT NULL,
   `reason` varchar(300) DEFAULT NULL,
