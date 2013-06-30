@@ -6,7 +6,11 @@ require 'xml-object'
 # rails runner "Jobs::WalletJournalCrawler.new.run"
 class Jobs::WalletJournalCrawler
   def run
-    persist_wallet_journal(fetch)
+    account_keys = ["1000","1001","1002","1003","1004","1005","1006"]
+    account_keys.each do |key|
+      xml = fetch(key)
+      persist_wallet_journal(xml)
+    end
   end
 
   private
@@ -43,10 +47,10 @@ class Jobs::WalletJournalCrawler
     end
   end
 
-  def fetch
+  def fetch(account_key)
     key_id = Settings.account.key_id
     verify_code = Settings.account.verify_code
-    uri = URI.parse("#{Settings.url.wallet_journal}?keyID=#{key_id}&vCode=#{verify_code}")
+    uri = URI.parse("#{Settings.url.wallet_journal}?keyID=#{key_id}&vCode=#{verify_code}&accountKey=#{account_key}")
     http = Net::HTTP.new(uri.host,uri.port)
     http.use_ssl = (uri.scheme == 'https')
     request = Net::HTTP::Get.new(uri.path + "?" + uri.query)
