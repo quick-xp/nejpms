@@ -38,7 +38,7 @@ class ManagementAccount
       #売上数(販売数合計)
       target.sales_count = ProductSale.new.get_total_sales_count(item)
       #利益
-      target.total_profit = target.product_amount - target.sales_amount
+      target.total_profit = target.sales_amount - target.product_amount
       #1個当たり利益
       target.per_profit =
         target.total_profit / ( (target.product_count + target.sales_count) /2)

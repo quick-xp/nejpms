@@ -63,7 +63,7 @@ class ProductSale
     total = 0
     sales.each {|sale|
       if type_id == sale.type_id
-        total += sale.type_id
+        total += sale.quantity
       end
     }
     return total
