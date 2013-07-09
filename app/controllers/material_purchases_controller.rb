@@ -46,8 +46,8 @@ class MaterialPurchasesController < ApplicationController
     #TODO : 名前チェック
 
     @material_purchase.type_id = InvTypes.first(:type_name => @material_purchase[:type_id])[:type_id]
-    @material_purchase.station_id = StaStations.first(:station_name => @material_purchase[:station_id])[:station_id]
-
+    @material_purchase.station_id = StaStations.first(:station_name=> @material_purchase[:station_id])[:station_id]
+    @material_purchase.transaction_date_time = Time.now.utc #utc
     respond_to do |format|
       if @material_purchase.save
         format.html { redirect_to @material_purchase, notice: 'Material purchase was successfully created.' }
@@ -66,6 +66,7 @@ class MaterialPurchasesController < ApplicationController
     puts  params[:material_purchase][:type_id]
     #@material_purchase.type_id = InvTypes.first(:type_name => params[:material_purchase][:type_id])[:type_id]
     @material_purchase.station_id = StaStations.first(:station_name => params[:material_purchase][:station_id])[:station_id]
+    @material_purchase.transaction_date_time = Time.now.utc #utc
 
     respond_to do |format|
       if @material_purchase.update(:quantity => params[:material_purchase][:quantity],

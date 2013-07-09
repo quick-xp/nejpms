@@ -46,7 +46,7 @@ class ProductSalesController < ApplicationController
 
     @product_sale.type_id = InvTypes.first(:type_name => @product_sale[:type_id])[:type_id]
     @product_sale.station_id = StaStations.first(:station_name => @product_sale[:station_id])[:station_id]
-    @product_sale.transaction_date_time = DateTime.now
+    @product_sale.transaction_date_time = DateTime.now.utc
 
     respond_to do |format|
       if @product_sale.save
@@ -70,7 +70,7 @@ class ProductSalesController < ApplicationController
                              :price => params[:product_sale][:price],
                              :station_id => @product_sale.station_id,
                              :journal_transaction_id => params[:journal_transaction_id],
-                             :transaction_date_time => DateTime.now)
+                             :transaction_date_time => DateTime.now.utc)
         format.html { redirect_to @product_sale, notice: 'Product sale was successfully updated.' }
         format.json { head :no_content }
       else

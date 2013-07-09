@@ -10,6 +10,7 @@ class ProductResult
   property :owner_id, Integer,field:'userID'
   property :create_count, Integer,field:'createCount'
   property :sum_price, Float,field:'sumPrice'
+  property :transaction_date_time, DateTime, field:'transactionDateTime'
 
   belongs_to :item, 'InvTypes',
     parent_key: [:type_id],

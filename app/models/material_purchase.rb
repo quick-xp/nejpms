@@ -11,6 +11,7 @@ class MaterialPurchase
   property :type_id,Integer, field: 'typeID'
   property :price, Float, field: 'price'
   property :station_id,Integer, field: 'stationID'
+  property :transaction_date_time,DateTime, field: 'transactionDateTime'
 
   belongs_to :item, 'InvTypes',
     parent_key: [:type_id],

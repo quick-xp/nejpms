@@ -110,6 +110,7 @@ class ProductResultsController < ApplicationController
 
       @product_result.sum_price = sum
 
+      @product_result.transaction_date_time = Time.now.utc
       respond_to do |format|
         if @product_result.save
           format.html { redirect_to @product_result, notice: 'Product result was successfully created.' }
@@ -162,7 +163,8 @@ class ProductResultsController < ApplicationController
       respond_to do |format|
         if @product_result.update(:owner_id => owner_id,
                                   :create_count => create_count,
-                                  :sum_price => sum)
+                                  :sum_price => sum,
+                                  :transaction_date_time => Time.now.utc)
           format.html { redirect_to @product_result, notice: 'Product result was successfully updated.' }
           format.json { head :no_content }
         else
