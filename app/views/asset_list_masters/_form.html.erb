@@ -1,0 +1,25 @@
+<%= form_for(@asset_list_master) do |f| %>
+  <% if @asset_list_master.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@asset_list_master.errors.count, "error") %> prohibited this asset_list_master from being saved:</h2>
+
+      <ul>
+      <% @asset_list_master.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :type_id %><br />
+    <%= f.text_field :type_id %>
+  </div>
+  <div class="field">
+    <%= f.label :quantity %><br />
+    <%= f.text_field :quantity %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

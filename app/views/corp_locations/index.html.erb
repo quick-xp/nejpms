@@ -1,0 +1,25 @@
+<h1>Listing corp_locations</h1>
+
+<table>
+  <tr>
+    <th>Station</th>
+    <th>Station name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @corp_locations.each do |corp_location| %>
+  <tr>
+    <td><%= corp_location.station_id %></td>
+    <td><%= corp_location.station_name %></td>
+    <td><%= link_to 'Show', corp_location %></td>
+    <td><%= link_to 'Edit', edit_corp_location_path(corp_location) %></td>
+    <td><%= link_to 'Destroy', corp_location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Corp location', new_corp_location_path %>

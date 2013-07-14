@@ -1,0 +1,22 @@
+<h1>Listing asset_list_masters</h1>
+
+<table>
+  <tr>
+    <th>Type</th>
+    <th>Quantity</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @asset_list_masters.each do |asset_list_master| %>
+  <tr>
+    <td><%= asset_list_master.type_id %></td>
+    <td><%= asset_list_master.quantity %></td>
+    <td><%= link_to 'Show', asset_list_master %></td>
+    <td><%= link_to '在庫推移', tran_show_asset_list_masters_path(asset_list_master) %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+

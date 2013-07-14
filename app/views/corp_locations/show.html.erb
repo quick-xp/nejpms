@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Station:</b>
+  <%= @corp_location.station_id %>
+</p>
+
+<p>
+  <b>Station name:</b>
+  <%= @corp_location.station_name %>
+</p>
+
+
+<%= link_to 'Edit', edit_corp_location_path(@corp_location) %> |
+<%= link_to 'Back', corp_locations_path %>

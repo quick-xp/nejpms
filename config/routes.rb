@@ -1,4 +1,15 @@
 Nejpms::Application.routes.draw do
+  resources :asset_list_masters, only: [:index,:show] do
+    collection do
+      get  :select
+      post  :index
+      post  :tran_show
+      get  :back2
+    end
+  end
+
+  resources :corp_locations
+
   resources :management_accounts
 
   resources :wallet_journals
