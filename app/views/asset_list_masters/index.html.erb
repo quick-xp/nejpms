@@ -1,21 +1,30 @@
-<h1>Listing asset_list_masters</h1>
+<h1>在庫マスタ</h1>
 
-<table>
-  <tr>
-    <th>Type</th>
-    <th>Quantity</th>
-    <th></th>
-    <th></th>
-  </tr>
+<h3> station : <%=@station_name%></h3>
+<table id="asset-list-master-table">
+  <thead>
+    <tr>
+      <th>アイテムID</th>
+      <th>アイテム名(EN)</th>
+      <th>アイテム名(JP)</th>
+      <th>数量</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
 
-<% @asset_list_masters.each do |asset_list_master| %>
-  <tr>
+  <tbody>
+  <% @asset_list_masters.each do |asset_list_master| %>
+    <tr>
     <td><%= asset_list_master.type_id %></td>
+    <td><%= asset_list_master.item.type_name %></td>
+    <td><%= asset_list_master.type_name_ja.text %></td>
     <td><%= asset_list_master.quantity %></td>
     <td><%= link_to 'Show', asset_list_master %></td>
-    <td><%= link_to '在庫推移', tran_show_asset_list_masters_path(asset_list_master) %></td>
+    <td><%= link_to '在庫推移', tran_show_asset_list_master_path(id:asset_list_master.type_id) %></td>
   </tr>
 <% end %>
+  </tbody>
 </table>
 
 <br />

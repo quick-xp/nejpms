@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<h2>在庫詳細</h2>
+
+<table class="table assets">
+  <tbody>
+    <tr>
+      <th>アイテム名</th>
+      <td><%= @asset.type_name %> ( <%= @asset.type_name_ja_text %> )</td>
+    </tr>
+    <tr>
+      <th>在庫</th>
+      <td><%= @transitions.try(:last).try(:current_quantity) %></td>
+    </tr>
+  </tbody>
+</table>
+
+
+<hr />
+
+<%= high_chart("sample", @graph) %>
+
+<center>
+<%= link_to back2_asset_list_masters_path(@asset_list_master),  class: 'btn' do %>
+  <i class="icon-chevron-left"></i> 在庫一覧へ戻る
+<% end %>
+</center>
+
+<table id="asset-list-transition-table">
+  <thead>
+    <tr>
+      <th>日付</th>
+      <th>日付(JP)</th>
+      <th>推移数</th>
+      <th>在庫数</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @transitions.each do |transition| %>
+    <tr>
+    <td><%= transition.add_date.strftime("%Y/%m/%d %H:%M:%S") %></td>
+    <td><%= (transition.add_date + 9.hours).strftime("%Y/%m/%d %H:%M:%S") %></td>
+    <td><%= number_with_delimiter transition.count %></td>
+    <td><%= number_with_delimiter transition.current_quantity %></td>
+  </tr>
+<% end %>
+  </tbody>
+</table>
+
+
+
+

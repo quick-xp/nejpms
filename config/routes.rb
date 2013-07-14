@@ -3,8 +3,10 @@ Nejpms::Application.routes.draw do
     collection do
       get  :select
       post  :index
-      post  :tran_show
       get  :back2
+    end
+    member do
+      get :tran_show
     end
   end
 

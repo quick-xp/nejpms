@@ -1,14 +1,44 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Type:</b>
-  <%= @asset_list_master.type_id %>
-</p>
+<h2>在庫詳細</h2>
 
-<p>
-  <b>Quantity:</b>
-  <%= @asset_list_master.quantity %>
-</p>
+<table class="table assets">
+  <tbody>
+    <tr>
+      <th>アイテム名</th>
+      <td><%= @asset_list_master.get_type_name %> ( <%= @asset_list_master.try(:item).try(:type_name_ja_text) %> )</td>
+    </tr>
+    <tr>
+      <th>在庫</th>
+      <td><%= @asset_list_master.quantity %></td>
+    </tr>
+    <tr>
+      <th>TypeID</th>
+      <td><%= @asset_list_master.type_id%></td>
+    </tr>
+   </tbody>
+</table>
 
-<%= link_to 'back',back2_asset_list_masters_path(@asset_list_master) %>
+
+<hr/>
+<h3>アイテムの詳細情報</h3>
+
+<table class="table assets">
+  <tbody>
+    <tr>
+      <th>基本価格</th>
+      <td><%= number_with_delimiter @asset_list_master.try(:item).try(:base_price) %></td>
+    </tr>
+    <tr>
+      <th>商品概要</th>
+      <td><%= @asset_list_master.try(:item).try(:description_ja_text) %></td>
+    </tr>
+  </tbody>
+</table>
+
+<center>
+<%= link_to back2_asset_list_masters_path(@asset_list_master),  class: 'btn' do %>
+  <i class="icon-chevron-left"></i> 在庫一覧へ戻る
+<% end %>
+</center>
 
