@@ -35,9 +35,36 @@ class InventoryClearancesController < ApplicationController
       Jobs::AssetListCrawler.new.run
       Jobs::MarketOrderCrawler.new.run
       Jobs::WalletJournalCrawler.new.run
+      Jobs::AssetListCompare.new.run
       message = "同期前在庫即時関連バッチが完了しました"
     else
-      message = "在庫を同期しました"
+        params[:new_quantity].each_pair { |key,value|
+
+          #現在の在庫数
+          if AssetListMaster.first(:station_id => 60003862,:type_id => key)!= nil then
+            current_count = AssetListMaster.first(:station_id => 60003862,:type_id => key)[:quantity]
+          else
+            current_count = 0
+          end
+          #新しい在庫数
+          new_count = value[:new_quantity]
+          #推移
+          transition = new_count.to_i - current_count.to_i
+          if transition != 0 then
+          #在庫反映待ちへの登録
+          AssetListsComp.new(:type_id => key,
+                             :quantity => transition,
+                             :station_id => 60003862 ,#TODO
+                             :sync_flag => 0,
+                             :comment => "在庫 棚卸",
+                             :sync_type => 3,#棚卸
+                             :sync_id => nil,
+                             :add_date => Time.now.utc).save
+          end
+        }
+
+        Jobs::AssetListCompare.new.run
+        message = "在庫を同期しました"
     end
 
     respond_to do |format|
