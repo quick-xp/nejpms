@@ -26,7 +26,7 @@ class AssetListsComp
         t = AssetListMaster.first(:type_id => target.type_id,:station_id => target.station_id)
         if t != nil then
           #在庫数量更新
-          if target.quantity.to_i + t.quantity.to_i < 0 then
+          if target.quantity.to_i + t.quantity.to_i <= 0 then
             t.destroy
           else
             t.update(:quantity => target.quantity.to_i + t.quantity.to_i)
