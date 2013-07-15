@@ -19,7 +19,7 @@ class InvTypeMaterials
 
 
   def asset
-    AssetLists.all(:type_id => self.material_type_id).first
+    AssetListMaster.all(:type_id => self.material_type_id).first
   end
 
   # 指定したアイテムの生産可能数を取得する
