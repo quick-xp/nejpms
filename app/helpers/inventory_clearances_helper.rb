@@ -1,0 +1,2 @@
+module InventoryClearancesHelper
+end

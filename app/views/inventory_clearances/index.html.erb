@@ -1,0 +1,40 @@
+<h1>在庫棚卸</h1>
+
+<%= form_for :inventory , :url=>{:action => 'create'} do |f| %>
+  <p> 同期実行前には必ず 同期前在庫関連バッチ即時実行 を実行してください <p>
+  <div class="actions">
+  <%= f.submit '同期開始' ,data: {confirm: '同期を実行してもよいですか?'}%>
+  <%= f.submit '同期前在庫関連バッチ即時実行' ,data: {confirm: '同期前在庫関連バッチ即時実行をしてもよろしいですか?'}%>
+</div>
+
+
+  <table id="asset-list-table">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Type name</th>
+      <th>Current quantity</th>
+      <th>Current sync quantity</th>
+      <th>New quantity</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @inventory_clearances.each_with_index do |inventory_clearance,i| %>
+    <tr>
+    <td><%= inventory_clearance.type_id %></td>
+    <td><%= inventory_clearance.type_name %></td>
+    <td><%= inventory_clearance.current_quantity %></td>
+    <td><%= inventory_clearance.current_sync_quantity %></td>
+    <td><%= fields_for "new_quantity[]", inventory_clearance,:index => inventory_clearance.type_id do |p| %>
+      <%= p.text_field :new_quantity, :value => inventory_clearance.new_quantity%>
+    <% end %>
+    </td>
+  </tr>
+<% end %>
+  </tbody>
+</table>
+
+<br />
+<% end %>
+
