@@ -50,6 +50,15 @@ class MaterialPurchasesController < ApplicationController
     @material_purchase.transaction_date_time = Time.now.utc #utc
     respond_to do |format|
       if @material_purchase.save
+        #在庫反映待ちへの登録
+        AssetListsComp.new(:type_id => @material_purchase.type_id,
+                           :quantity => @material_purchase.quantity,
+                           :station_id => @material_purchase.station_id,
+                           :sync_flag => 0,
+                           :comment => "原料仕入れ 個別登録",
+                           :sync_type => 0,
+                           :sync_id => @material_purchase.transaction_id,
+                           :add_date => @material_purchase.transaction_date_time).save
         format.html { redirect_to @material_purchase, notice: 'Material purchase was successfully created.' }
         format.json { render json: @material_purchase, status: :created, location: @material_purchase }
       else
@@ -62,17 +71,25 @@ class MaterialPurchasesController < ApplicationController
   # PATCH/PUT /material_purchases/1
   # PATCH/PUT /material_purchases/1.json
   def update
-    @material_purchase = MaterialPurchase.get(params[:id])
+    @material_purchase = MaterialPurchase.first(:transaction_id => params[:material_purchase][:transaction_id])
     puts  params[:material_purchase][:type_id]
     #@material_purchase.type_id = InvTypes.first(:type_name => params[:material_purchase][:type_id])[:type_id]
-    @material_purchase.station_id = StaStations.first(:station_name => params[:material_purchase][:station_id])[:station_id]
-    @material_purchase.transaction_date_time = Time.now.utc #utc
+    station_id = StaStations.first(:station_name => params[:material_purchase][:station_id])[:station_id]
+    transaction_date_time = Time.now.utc #utc
 
     respond_to do |format|
       if @material_purchase.update(:quantity => params[:material_purchase][:quantity],
-                                  :price => params[:material_purchase][:price],
-                                  :station_id => @material_purchase.station_id)
-
+                                   :price => params[:material_purchase][:price],
+                                   :station_id => station_id,
+                                   :transaction_date_time => transaction_date_time)
+        #在庫反映待ちへの登録
+        w = AssetListsComp.first(:sync_type => 0,:sync_id => @material_purchase.transaction_id)
+        if w != nil
+          w.update( :quantity => @material_purchase.quantity,
+                   :station_id => @material_purchase.station_id,
+                   :comment => "原料仕入れ 個別登録",
+                   :add_date => @material_purchase.transaction_date_time)
+        end
         format.html { redirect_to @material_purchase, notice: 'Material purchase was successfully updated.' }
         format.json { head :no_content }
       else
@@ -87,6 +104,12 @@ class MaterialPurchasesController < ApplicationController
   def destroy
     @material_purchase = MaterialPurchase.get(params[:id])
     @material_purchase.destroy
+
+    #在庫反映待ちへの登録
+    w = AssetListsComp.first(:sync_type => 0,:sync_id => @material_purchase.transaction_id)
+    if w != nil then
+      w.destroy
+    end
 
     respond_to do |format|
       format.html { redirect_to material_purchases_url }
