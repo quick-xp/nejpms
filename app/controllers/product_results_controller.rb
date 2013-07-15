@@ -86,6 +86,7 @@ class ProductResultsController < ApplicationController
     #使用アイテム登録
     iid = Time.now.strftime("%m%d%H%M%S").to_i
     sum = 0
+    type_name = @product_result.type_id
 
     #トランザクション開始
     ProductResult.transaction{
@@ -96,6 +97,19 @@ class ProductResultsController < ApplicationController
           item.type_id = InvTypes.first(:type_name => item.type_id)[:type_id]
           if BluePrintPurchase.first(:type_id => item.type_id) == nil then
             item.sum_price = calctool.calculate_material_cost(item.type_id) * item.use_item_count
+
+            #在庫反映待ちへの登録
+            owner =UserList.first(:user_id => @product_result.owner_id)[:user_name]
+            AssetListsComp.new(:type_id => item.type_id,
+                               :quantity => - item.use_item_count,
+                               :station_id => 60003862, #TODO
+                               :sync_flag => 0,
+                               :comment => "生産 :" + type_name + " ,生産数 : " + @product_result.create_count.to_s +
+                               " ,owner : " + owner,
+                               :sync_type => 1,#生産実績
+                               :sync_id => iid,
+                               :add_date => Time.now.utc).save
+
           else
             item.sum_price = calctool.calculate_blueprint_cost(item.type_id) * item.use_item_count
           end
@@ -111,6 +125,18 @@ class ProductResultsController < ApplicationController
       @product_result.sum_price = sum
 
       @product_result.transaction_date_time = Time.now.utc
+      #在庫反映待ちへの登録
+      owner =UserList.first(:user_id => @product_result.owner_id)[:user_name]
+      AssetListsComp.new(:type_id => @product_result.type_id,
+                         :quantity => @product_result.create_count,
+                         :station_id => 60003862, #TODO
+                         :sync_flag => 0,
+                         :comment => "生産 :" + type_name + " ,生産数 : " + @product_result.create_count.to_s +
+                         " ,owner : " + owner,
+                         :sync_type => 1,#生産実績
+                         :sync_id => iid,
+                         :add_date => @product_result.transaction_date_time).save
+
       respond_to do |format|
         if @product_result.save
           format.html { redirect_to @product_result, notice: 'Product result was successfully created.' }
@@ -127,7 +153,6 @@ class ProductResultsController < ApplicationController
   # PATCH/PUT /product_results/1.json
   def update
     @product_result = ProductResult.get(params[:id])
-    result = ProductResult.new(product_result_params)
     @product_result_item = items_params
 
     #トランザクション開始
@@ -138,8 +163,6 @@ class ProductResultsController < ApplicationController
       }
       sum = 0
 
-
-
       #使用アイテム登録
       @product_result_item.each{|item|
         if item.type_id != "" then
@@ -147,6 +170,25 @@ class ProductResultsController < ApplicationController
           item.type_id = InvTypes.first(:type_name => item.type_id)[:type_id]
           if BluePrintPurchase.first(:type_id => item.type_id) == nil then
             item.sum_price = calctool.calculate_material_cost(item.type_id) * item.use_item_count
+
+            #在庫反映待ちへの登録
+            owner =UserList.first(:user_id => @product_result.owner_id)[:user_name]
+            type_name = InvTypes.first(:type_id => @product_result.type_id)[:type_name]
+            w = AssetListsComp.first(:sync_type => 1,:sync_id => params[:id],:type_id => item.type_id)
+            puts "反映待ち"
+            puts item.type_id.to_s
+            puts "----"
+            if w != nil
+              puts "反映待ち登録 実行"
+              puts item.use_item_count.to_s
+              puts "登録end----"
+              owner =UserList.first(:user_id => @product_result.owner_id)[:user_name]
+              w.update( :quantity => - item.use_item_count,
+                       :station_id => 60003862, #TODO
+                       :comment => "生産 :" + type_name + " ,生産数 : " + @product_result.create_count.to_s +
+                       " ,owner : " + owner,
+                       :add_date => Time.now.utc)
+            end
           else
             item.sum_price = calctool.calculate_blueprint_cost(item.type_id) * item.use_item_count
           end
@@ -159,6 +201,19 @@ class ProductResultsController < ApplicationController
       # @product_result.sum_price = sum
       owner_id = params[:product_result][:owner_id]
       create_count = params[:product_result][:create_count]
+
+      #在庫反映待ちへの登録
+      type_name = InvTypes.first(:type_id => @product_result.type_id)[:type_name]
+      w = AssetListsComp.first(:sync_type => 1,:sync_id => params[:id],:type_id => @product_result.type_id)
+      if w != nil
+        owner =UserList.first(:user_id => @product_result.owner_id)[:user_name]
+        w.update( :quantity => @product_result.create_count,
+                 :station_id => 60003862, #TODO
+                 :comment => "生産 :" + type_name + " ,生産数 : " + @product_result.create_count.to_s +
+                 " ,owner : " + owner,
+                 :add_date => Time.now.utc)
+
+      end
 
       respond_to do |format|
         if @product_result.update(:owner_id => owner_id,
@@ -180,6 +235,12 @@ class ProductResultsController < ApplicationController
   def destroy
     @product_result = ProductResult.get(params[:id])
     @product_result.destroy
+
+    #在庫反映待ちへの登録
+    w = AssetListsComp.all(:sync_type => 1,:sync_id => params[:id])
+    if w != nil then
+      w.all.destroy
+    end
 
     respond_to do |format|
       format.html { redirect_to product_results_url }
