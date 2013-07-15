@@ -4,22 +4,44 @@ class AssetListsComp
   include DataMapper::Resource
 
   storage_names[:default] = 'AssetList_Comp'
-  property :item_id,Integer, field: 'itemID', key:true, required: true
-  property :quantity,Integer, field: 'quantity'
-  property :type_id,Integer, field: 'typeID'
-  property :location_id,Integer, field: 'locationID'
-  property :flag,Integer, field:'flag'
 
-  class << self
-    def bulk_persist!(transaction)
-      transaction.each do |tran|
-        begin
-          puts tran.item_id
-          tran.save
-        rescue
-          puts "DB登録の際にエラーが発生しました"
+  property :id, Serial,field: 'id', key:true, required:true
+  property :type_id,Integer, field: 'typeID'
+  property :quantity,Integer, field: 'quantity'
+  property :station_id,Integer, field: 'stationID'
+  property :sync_flag,Integer, field:'syncFlag'
+  property :comment,String,field:'comment',length: 200
+  property :sync_type,Integer,field:'syncType' #0:原料仕入れ #1生産実績 #2 出庫 #3 棚卸
+  property :sync_id,Integer,field: 'syncID'
+  property :add_date,DateTime
+
+  def reflect_asset_waiting
+    targets = AssetListsComp.all(order: :add_date.asc)
+
+    puts targets
+    targets.each{ |target|
+
+      if target.sync_flag == 0 then
+        #在庫更新
+        t = AssetListMaster.first(:type_id => target.type_id,:station_id => target.station_id)
+        if t != nil then
+          #在庫数量更新
+          if target.quantity.to_i + t.quantity.to_i < 0 then
+            t.destroy
+          else
+            t.update(:quantity => target.quantity.to_i + t.quantity.to_i)
+          end
+          #反映待ちを反映済みに更新
+          target.update(:sync_flag => 1)
+          #在庫推移登録
+          InventoryTransitions.new(:type_id => target.type_id,
+                                   :location_id => target.station_id,
+                                   :count => target.quantity.to_i,
+                                   :add_date => target.add_date,
+                                   :current_quantity => target.quantity.to_i + t.quantity.to_i).save
         end
       end
-    end
+    }
+
   end
 end
