@@ -1,4 +1,7 @@
 Nejpms::Application.routes.draw do
+  resources :inventory_clearance_settings
+
+
   resources :asset_list_masters, only: [:index,:show] do
     collection do
       get  :select

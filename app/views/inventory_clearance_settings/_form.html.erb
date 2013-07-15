@@ -1,0 +1,21 @@
+<%= form_for(@inventory_clearance_setting) do |f| %>
+  <% if @inventory_clearance_setting.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@inventory_clearance_setting.errors.count, "error") %> prohibited this inventory_clearance_setting from being saved:</h2>
+
+      <ul>
+      <% @inventory_clearance_setting.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :flag_id %><br />
+    <%= f.text_field :flag_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
