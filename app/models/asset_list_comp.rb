@@ -24,22 +24,27 @@ class AssetListsComp
       if target.sync_flag == 0 then
         #在庫更新
         t = AssetListMaster.first(:type_id => target.type_id,:station_id => target.station_id)
-        if t != nil then
           #在庫数量更新
-          if target.quantity.to_i + t.quantity.to_i <= 0 then
-            t.destroy
-          else
-            t.update(:quantity => target.quantity.to_i + t.quantity.to_i)
-          end
-          #反映待ちを反映済みに更新
+        if t == nil then
+          AssetListMaster.new(:type_id => target.type_id,
+                              :quantity => target.quantity,
+                              :station_id => target.station_id).save
+          q = 0
+        elsif target.quantity.to_i + t.quantity.to_i <= 0 then
+          q = t.quantity.to_i
+          t.destroy
+        else
+          q = t.quantity.to_i
+          t.update(:quantity => target.quantity.to_i + t.quantity.to_i)
+        end
+        #反映待ちを反映済みに更新
           target.update(:sync_flag => 1)
           #在庫推移登録
           InventoryTransitions.new(:type_id => target.type_id,
                                    :location_id => target.station_id,
                                    :count => target.quantity.to_i,
                                    :add_date => target.add_date,
-                                   :current_quantity => target.quantity.to_i + t.quantity.to_i).save
-        end
+                                   :current_quantity => target.quantity.to_i + q).save
       end
     }
 
