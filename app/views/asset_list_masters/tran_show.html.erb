@@ -33,6 +33,7 @@
       <th>日付(JP)</th>
       <th>推移数</th>
       <th>在庫数</th>
+      <th>推移理由</th>
     </tr>
   </thead>
 
@@ -43,6 +44,7 @@
     <td><%= (transition.add_date + 9.hours).strftime("%Y/%m/%d %H:%M:%S") %></td>
     <td><%= number_with_delimiter transition.count %></td>
     <td><%= number_with_delimiter transition.current_quantity %></td>
+    <td><%= transition.comment %></td>
   </tr>
 <% end %>
   </tbody>

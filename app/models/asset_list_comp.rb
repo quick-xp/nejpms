@@ -44,7 +44,8 @@ class AssetListsComp
                                    :location_id => target.station_id,
                                    :count => target.quantity.to_i,
                                    :add_date => target.add_date,
-                                   :current_quantity => target.quantity.to_i + q).save
+                                   :current_quantity => target.quantity.to_i + q,
+                                   :comment => target.comment).save
       end
     }
 

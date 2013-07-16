@@ -11,6 +11,9 @@ class InventoryTransitions
   property :count, Float, field: 'count'
   property :add_date, DateTime, field: 'addDate'
   property :current_quantity, Integer, field: 'currentQuantity'
+  property :comment,String,field:'comment',length: 200
+  property :sync_type,Integer,field:'syncType' #0:原料仕入れ #1生産実績 #2 出庫 #3 棚卸
+  property :sync_id,Integer,field: 'syncID'
 
   attr_accessor :item_name
 
@@ -27,7 +30,8 @@ class InventoryTransitions
       i1.count as count,
       i1.addDate as add_date,
       i1.currentQuantity as current_quantity,
-      inv.typeName as item_name
+      inv.typeName as item_name,
+      i1.comment as comment
     from
       InventoryTransition i1
     inner join
