@@ -1,0 +1,13 @@
+<h1>原料不足把握</h1>
+<%= form_for @select_stations, url: material_shortages_path, method: :post do |f| %>
+
+<div class="field">
+  <%= f.label :station_id %><br />
+  <%= f.collection_select :station_id,  @select_stations, :station_id, :station_name %>
+</div>
+
+<div class="actions">
+  <%= f.submit("選択") %>
+</div>
+<% end %>
+

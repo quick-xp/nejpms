@@ -12,7 +12,7 @@
     <tr>
       <th>生産可能可否</th>
       <td>
-        <% if @materials.any? { |m| m.shortage_material?(@create_count) } || @materials.empty? %>
+        <% if @materials.any? { |m| m.shortage_material?(@create_count,@station_id) } || @materials.empty? %>
         <span class="label label-important">生産不可</span>
         <% else %>
         <span class="label label-info">生産可能</span>
@@ -47,7 +47,7 @@
   <tr>
     <td>
       <center>
-        <% if material.shortage_material?(@create_count) %>
+        <% if material.shortage_material?(@create_count,@station_id) %>
           <span class="label label-important">不足</span>
         <% else %>
           <span class="label label-info">充足</span>
@@ -57,9 +57,9 @@
     <td><%= material.try(:material).try(:type_id) %></td>
     <td><%= material.try(:material).try(:type_name) %></td>
     <td><%= material.try(:material).try(:type_name_ja).try(:text) %></td>
-    <td><%= material.try(:asset).try(:quantity) %></td>
+    <td><%= material.asset(@station_id).try(:quantity) %></td>
     <td><%= material.requisite_amount_for_create(@create_count) %></td>
-    <td><%= material.shortage_count(@create_count) %></td>
+    <td><%= material.shortage_count(@create_count,@station_id) %></td>
   </tr>
 <% end %>
 </tbody>

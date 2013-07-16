@@ -57,6 +57,8 @@ Nejpms::Application.routes.draw do
 
   resources :material_shortages, only: [:index, :show] do
     collection do
+      get :select
+      post:index
       post :confirm
     end
   end

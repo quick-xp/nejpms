@@ -18,15 +18,15 @@ class InvTypeMaterials
     child_key: [:material_type_id]
 
 
-  def asset
-    AssetListMaster.all(:type_id => self.material_type_id).first
+  def asset(station_id)
+    AssetListMaster.all(:type_id => self.material_type_id,:station_id => station_id).first
   end
 
   # 指定したアイテムの生産可能数を取得する
-  def self.producible_count(type_id)
+  def self.producible_count(type_id,station_id)
     required_materials = self.all(type_id: type_id)
     required_materials
-      .map { |r| (r.asset.present? ? r.asset.quantity : 0) / r.quantity }
+      .map { |r| (r.asset(station_id).present? ? r.asset(station_id).quantity : 0) / r.quantity }
       .min
   end
 
@@ -34,20 +34,20 @@ class InvTypeMaterials
     self.quantity * create_count
   end
 
-  def shortage_material?(product_create_count)
-    if self.asset.nil?
+  def shortage_material?(product_create_count,station_id)
+    if self.asset(station_id).nil?
       true
     else
-      asset.quantity < requisite_amount_for_create(product_create_count)
+      asset(station_id).quantity < requisite_amount_for_create(product_create_count)
     end
   end
 
-  def shortage_count(product_create_count)
-    if shortage_material?(product_create_count)
-      if asset.nil?
+  def shortage_count(product_create_count,station_id)
+    if shortage_material?(product_create_count,station_id)
+      if asset(station_id).nil?
         requisite_amount_for_create(product_create_count)
       else
-        requisite_amount_for_create(product_create_count) - asset.quantity
+        requisite_amount_for_create(product_create_count) - asset(station_id).quantity
       end
     else
       0

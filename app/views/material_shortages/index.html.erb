@@ -12,6 +12,8 @@
     </div>
   <% end %>
 
+
+  <h3> station : <%=@station_name%></h3>
   <div class="field">
     <%= f.label "生産したい商品" %>
     <%= f.collection_select :item_id,  @producible_items, :type_id, :type_name %>
@@ -39,7 +41,7 @@
 
     <tbody>
     <% @producible_items.each do |item| %>
-      <% producible_count = InvTypeMaterials.producible_count(item.type_id) %>
+      <% producible_count = InvTypeMaterials.producible_count(item.type_id,@station_id) %>
       <tr>
       <td>
         <center>
