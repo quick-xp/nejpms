@@ -102,7 +102,7 @@ class ProductResultsController < ApplicationController
             owner =UserList.first(:user_id => @product_result.owner_id)[:user_name]
             AssetListsComp.new(:type_id => item.type_id,
                                :quantity => - item.use_item_count,
-                               :station_id => 60003862, #TODO
+                               :station_id => @product_result.station_id,
                                :sync_flag => 0,
                                :comment => "生産 :" + type_name + " ,生産数 : " + @product_result.create_count.to_s +
                                " ,owner : " + owner,
@@ -129,7 +129,7 @@ class ProductResultsController < ApplicationController
       owner =UserList.first(:user_id => @product_result.owner_id)[:user_name]
       AssetListsComp.new(:type_id => @product_result.type_id,
                          :quantity => @product_result.create_count,
-                         :station_id => 60003862, #TODO
+                         :station_id => @product_result.station_id,
                          :sync_flag => 0,
                          :comment => "生産 :" + type_name + " ,生産数 : " + @product_result.create_count.to_s +
                          " ,owner : " + owner,
@@ -163,6 +163,7 @@ class ProductResultsController < ApplicationController
       }
       sum = 0
 
+      station_id = params[:product_result][:station_id]
       #使用アイテム登録
       @product_result_item.each{|item|
         if item.type_id != "" then
@@ -184,7 +185,7 @@ class ProductResultsController < ApplicationController
               puts "登録end----"
               owner =UserList.first(:user_id => @product_result.owner_id)[:user_name]
               w.update( :quantity => - item.use_item_count,
-                       :station_id => 60003862, #TODO
+                       :station_id => station_id,
                        :comment => "生産 :" + type_name + " ,生産数 : " + @product_result.create_count.to_s +
                        " ,owner : " + owner,
                        :add_date => Time.now.utc)
@@ -208,7 +209,7 @@ class ProductResultsController < ApplicationController
       if w != nil
         owner =UserList.first(:user_id => @product_result.owner_id)[:user_name]
         w.update( :quantity => @product_result.create_count,
-                 :station_id => 60003862, #TODO
+                 :station_id => station_id,
                  :comment => "生産 :" + type_name + " ,生産数 : " + @product_result.create_count.to_s +
                  " ,owner : " + owner,
                  :add_date => Time.now.utc)
@@ -219,6 +220,7 @@ class ProductResultsController < ApplicationController
         if @product_result.update(:owner_id => owner_id,
                                   :create_count => create_count,
                                   :sum_price => sum,
+                                  :station_id => station_id,
                                   :transaction_date_time => Time.now.utc)
           format.html { redirect_to @product_result, notice: 'Product result was successfully updated.' }
           format.json { head :no_content }
@@ -254,7 +256,7 @@ class ProductResultsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def product_result_params
-      params.require(:product_result).permit(:create_count, :owner_id, :sum_price, :type_id)
+      params.require(:product_result).permit(:create_count, :owner_id, :sum_price, :type_id, :station_id)
     end
 
     def items_shows(item_information)

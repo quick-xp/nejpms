@@ -10,6 +10,7 @@ class ProductResult
   property :owner_id, Integer,field:'userID'
   property :create_count, Integer,field:'createCount'
   property :sum_price, Float,field:'sumPrice'
+  property :station_id, Integer, field: 'stationID'
   property :transaction_date_time, DateTime, field:'transactionDateTime'
 
   belongs_to :item, 'InvTypes',
@@ -19,6 +20,11 @@ class ProductResult
   belongs_to :user, 'UserList',
     parent_key: [:user_id],
     child_key:[:owner_id]
+
+  belongs_to :station, 'CorpLocation',
+    parent_key: [:station_id],
+    child_key:[:station_id]
+
 
   def valid_item_name(type_name)
     if not InvTypes.all(:type_name.like => "#{type_name.strip}", limit: 1).present?

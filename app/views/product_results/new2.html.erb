@@ -21,6 +21,10 @@
   <%= f.collection_select :owner_id,UserList.all,:user_id,:user_name %>
 </div>
 <div class="field">
+  <%= f.label :station_id %><br />
+  <%= f.collection_select :station_id,  CorpLocation.all, :station_id, :station_name %>
+</div>
+<div class="field">
   <%= f.label :create_count %><br />
   <%= f.text_field :create_count %>
 </div>
