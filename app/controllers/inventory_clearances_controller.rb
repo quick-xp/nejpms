@@ -3,7 +3,14 @@ class InventoryClearancesController < ApplicationController
   # GET /inventory_clearances
   # GET /inventory_clearances.json
   def index
-    @inventory_clearances = InventoryClearance.new.get_assets_lists(60003862)
+    if session[:station] == nil
+      session[:station] = params[:corp_location][:station_id]
+    end
+
+    @station_id = session[:station]
+    @station_name = StaStations.first(:station_id => @station_id)[:station_name]
+
+    @inventory_clearances = InventoryClearance.new.get_assets_lists(@station_id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,7 +21,6 @@ class InventoryClearancesController < ApplicationController
   # GET /inventory_clearances/select
   # GET /inventory_clearances/select.json
   def select
-    @asset_list_masters = AssetListMaster.new
     @select_stations = CorpLocation.all
     session[:station] = nil
     respond_to do |format|
@@ -27,6 +33,8 @@ class InventoryClearancesController < ApplicationController
   # COMMIT /inventory_clearances
   # COMMIT /inventory_clearances
   def create
+
+    @station_id = session[:station]
 
     if params[:commit] != "同期開始"
       Jobs::WalletTransactionCrawler.new.run
@@ -41,8 +49,8 @@ class InventoryClearancesController < ApplicationController
         params[:new_quantity].each_pair { |key,value|
 
           #現在の在庫数
-          if AssetListMaster.first(:station_id => 60003862,:type_id => key)!= nil then
-            current_count = AssetListMaster.first(:station_id => 60003862,:type_id => key)[:quantity]
+          if AssetListMaster.first(:station_id => @station_id,:type_id => key)!= nil then
+            current_count = AssetListMaster.first(:station_id => @station_id,:type_id => key)[:quantity]
           else
             current_count = 0
           end
@@ -54,7 +62,7 @@ class InventoryClearancesController < ApplicationController
           #在庫反映待ちへの登録
           AssetListsComp.new(:type_id => key,
                              :quantity => transition,
-                             :station_id => 60003862 ,#TODO
+                             :station_id => @station_id ,
                              :sync_flag => 0,
                              :comment => "在庫 棚卸",
                              :sync_type => 3,#棚卸

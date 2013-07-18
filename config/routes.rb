@@ -1,5 +1,10 @@
 Nejpms::Application.routes.draw do
-  resources :inventory_clearances
+  resources :inventory_clearances do
+    collection do
+      get :select
+    end
+  end
+
 
 
   resources :inventory_clearance_settings,only: [:index] do
