@@ -1,4 +1,10 @@
 Nejpms::Application.routes.draw do
+  resources :deliveries do
+    collection do
+      get :select
+    end
+  end
+
   resources :inventory_clearances do
     collection do
       get :select
