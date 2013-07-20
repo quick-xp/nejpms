@@ -1,16 +1,20 @@
-<h1>Listing product_sales</h1>
+<h1>販売マスタ</h1>
 
+<%= link_to '販売登録', new_product_sale_path %>
+</br>
+</br>
 <table id="product-sales-table">
   <thead>
     <tr>
-      <th>Transaction</th>
-      <th>Quantity</th>
-      <th>Type</th>
-      <th>Price</th>
-      <th>Client</th>
-      <th>Station</th>
+      <th>取引日</th>
+      <th>取引日(JP)</th>
+      <th>数量</th>
+      <th>アイテム名</th>
+      <th>価格</th>
+      <th>顧客ID</th>
+      <th>ステーション</th>
       <th>Journal transaction</th>
-      <th>Transaction date time</th>
+      <th>Transaction</th>
       <th></th>
       <th></th>
       <th></th>
@@ -19,14 +23,15 @@
   <tbody>
   <% @product_sales.each do |product_sale| %>
     <tr>
-    <td><%= product_sale.transaction_id %></td>
+    <td><%= product_sale.transaction_date_time.strftime("%Y/%m/%d %H:%M:%S") %></td>
+    <td><%= (product_sale.transaction_date_time + 9.hours).strftime("%Y/%m/%d %H:%M:%S") %></td>
     <td><%= product_sale.quantity %></td>
     <td><%= product_sale.get_type_name %></td>
     <td><%= number_with_delimiter product_sale.price %></td>
     <td><%= product_sale.client_id %></td>
     <td><%= product_sale.get_station_name %></td>
     <td><%= product_sale.journal_transaction_id %></td>
-    <td><%= product_sale.transaction_date_time %></td>
+    <td><%= product_sale.transaction_id %></td>
     <td><%= link_to 'Show', product_sale %></td>
     <td><%= link_to 'Edit', edit_product_sale_path(product_sale) %></td>
     <td><%= link_to 'Destroy', product_sale, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -37,4 +42,3 @@
 
 <br />
 
-<%= link_to 'New Product sale', new_product_sale_path %>

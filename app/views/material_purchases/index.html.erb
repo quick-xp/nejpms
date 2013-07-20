@@ -3,11 +3,13 @@
 <table id="purchases-table">
 <thead>
   <tr>
-    <th>Transaction</th>
+    <th>取引日</th>
+    <th>取引日(JP)</th>
     <th>原料名</th>
     <th>数量</th>
     <th>価格</th>
     <th>ステーション</th>
+    <th>Transaction</th>
     <th></th>
     <th></th>
     <th></th>
@@ -17,11 +19,13 @@
 <tbody>
 <% @material_purchases.each do |material_purchase| %>
   <tr>
-    <td><%= material_purchase.transaction_id %></td>
+    <td><%= material_purchase.transaction_date_time.strftime("%Y/%m/%d %H:%M:%S") %></td>
+    <td><%= (material_purchase.transaction_date_time + 9.hours).strftime("%Y/%m/%d %H:%M:%S") %></td>
     <td><%= material_purchase.get_type_name %></td>
     <td><%= material_purchase.quantity %></td>
     <td><%= number_with_delimiter material_purchase.price %></td>
     <td><%= material_purchase.get_station_name %></td>
+    <td><%= material_purchase.transaction_id %></td>
     <td><%= link_to 'Show', material_purchase %></td>
     <td><%= link_to 'Edit', edit_material_purchase_path(material_purchase) %></td>
     <td><%= link_to 'Destroy', material_purchase, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -1,8 +1,10 @@
 <h1>生産実績</h1>
 
-<table id="asset-list-table">
+<table id="product-result-table">
 <thead>
   <tr>
+    <th>製造日</th>
+    <th>製造日(JP)</th>
     <th>製品</th>
     <th>オーナー</th>
     <th>製造数</th>
@@ -16,6 +18,8 @@
 <tbody>
 <% @product_results.each do |product_result| %>
   <tr>
+    <td><%= product_result.transaction_date_time.strftime("%Y/%m/%d %H:%M:%S") %></td>
+    <td><%= (product_result.transaction_date_time + 9.hours).strftime("%Y/%m/%d %H:%M:%S") %></td>
     <td><%= product_result.get_type_name%></td>
     <td><%= product_result.user.user_name %></td>
     <td><%= product_result.create_count %></td>
