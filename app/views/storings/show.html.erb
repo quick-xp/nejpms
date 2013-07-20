@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Type:</b>
+  <%= @storing.get_type_name %>
+</p>
+
+<p>
+  <b>Quantity:</b>
+  <%= @storing.quantity %>
+</p>
+
+<p>
+  <b>Station:</b>
+  <%= @storing.station_id %>
+</p>
+
+<p>
+  <b>入庫日:</b>
+  <%= @storing.add_date %>
+</p>
+
+
+<%= link_to 'Edit', edit_storing_path(@storing) %> |
+<%= link_to 'Back', storings_path %>

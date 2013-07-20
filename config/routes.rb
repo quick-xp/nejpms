@@ -1,4 +1,7 @@
 Nejpms::Application.routes.draw do
+  resources :storings
+
+
   resources :deliveries do
     collection do
       get :select

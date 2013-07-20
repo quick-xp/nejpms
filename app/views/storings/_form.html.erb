@@ -1,0 +1,29 @@
+<%= form_for(@storing) do |f| %>
+  <% if @storing.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@storing.errors.count, "error") %> prohibited this storing from being saved:</h2>
+
+      <ul>
+      <% @storing.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :type_id %><br />
+    <%= f.text_field :type_id ,:value => @storing.get_type_name%>
+  </div>
+  <div class="field">
+    <%= f.label :quantity %><br />
+    <%= f.text_field :quantity %>
+  </div>
+  <div class="field">
+    <%= f.label :station_id %><br />
+  <%= f.collection_select :station_id,  CorpLocation.all, :station_id, :station_name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

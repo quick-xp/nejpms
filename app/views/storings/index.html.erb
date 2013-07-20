@@ -1,0 +1,36 @@
+<h1>入庫マスタ</h1>
+
+<%= link_to '入庫登録', new_storing_path %>
+</br>
+</br>
+<table id="store-list-master-table">
+  <thead>
+    <tr>
+      <th>出庫日</th>
+      <th>出庫日(JP)</th>
+      <th>アイテム名</th>
+      <th>Station</th>
+      <th>数量</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<% @storings.each do |storing| %>
+  <tr>
+    <td><%= storing.add_date.strftime("%Y/%m/%d %H:%M:%S") %></td>
+    <td><%= (storing.add_date + 9.hours).strftime("%Y/%m/%d %H:%M:%S") %></td>
+    <td><%= storing.try(:item).try(:type_name) %></td>
+    <td><%= storing.get_station_name %></td>
+    <td><%= storing.quantity %></td>
+    <td><%= link_to 'Show', storing %></td>
+    <td><%= link_to 'Edit', edit_storing_path(storing) %></td>
+    <td><%= link_to 'Destroy', storing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
+<br />
+
