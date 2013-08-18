@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Transaction date time:</b>
+  <%= @account_payable.transaction_date_time %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @account_payable.user_id %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @account_payable.price %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @account_payable.status %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%= @account_payable.comment %>
+</p>
+
+<p>
+  <b>Operation date time:</b>
+  <%= @account_payable.operation_date_time %>
+</p>
+
+
+<%= link_to 'Edit', edit_account_payable_path(@account_payable) %> |
+<%= link_to 'Back', account_payables_path %>

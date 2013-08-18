@@ -1,0 +1,51 @@
+<h1>買掛金一覧</h1>
+
+<table class="table assets">
+  <tbody>
+    <tr>
+      <th>買掛金残合計</th>
+      <td><%= number_with_delimiter @account_payable_remain_total %></td>
+    </tr>
+    <% @user_list.each do |list| %>
+    <tr>
+      <th><%= list.user_name %> </th>
+      <td><%= number_with_delimiter @account_payable.get_not_pay_price_total_each_user(list.user_id) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= link_to '支払', select_account_payables_path %>
+
+<table id="purchases-table">
+  <thead>
+    <tr>
+      <th>取引日</th>
+      <th>取引日(JP)</th>
+      <th>ユーザ</th>
+      <th>金額</th>
+      <th>ステータス</th>
+      <th>理由</th>
+      <th>操作日</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @account_payables.each do |account_payable| %>
+    <tr>
+    <td><%= account_payable.transaction_date_time.strftime("%Y/%m/%d %H:%M:%S")  %></td>
+    <td><%= (account_payable.transaction_date_time + 9.hours).strftime("%Y/%m/%d %H:%M:%S") %></td>
+    <td><%= account_payable.try(:user).try(:user_name) %></td>
+    <td><%= number_with_delimiter account_payable.price %></td>
+    <td><%= account_payable.try(:status_list).try(:key_name) %></td>
+    <td><%= account_payable.comment %></td>
+    <td><%= account_payable.operation_date_time.strftime("%Y/%m/%d %H:%M:%S") %></td>
+    <td><%= link_to 'Show', account_payable %></td>
+  </tr>
+<% end %>
+  </tbody>
+</table>
+
+<br />
+

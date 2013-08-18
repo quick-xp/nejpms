@@ -1,6 +1,13 @@
 Nejpms::Application.routes.draw do
-  resources :storings
+  resources :account_payables do
+    collection do
+      get :select
+      post  :confirm
+      post :new2
+    end
+  end
 
+  resources :storings
 
   resources :deliveries do
     collection do

@@ -1,0 +1,13 @@
+<h1>支払対象選択</h1>
+<%= form_for @account_payable, url: new2_account_payables_path do |f| %>
+
+<div class="field">
+  <%= f.label :user_id %><br />
+  <%= f.collection_select :user_id,UserList.all,:user_id,:user_name %>
+</div>
+
+<div class="actions">
+  <%= f.submit("選択") %>
+</div>
+<% end %>
+
