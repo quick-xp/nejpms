@@ -2,7 +2,8 @@ Nejpms::Application.routes.draw do
   resources :account_payables do
     collection do
       get :select
-      post  :confirm
+      post :confirm
+      post :ok
       post :new2
     end
   end

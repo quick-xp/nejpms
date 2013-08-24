@@ -40,7 +40,7 @@
     <td><%= number_with_delimiter account_payable.price %></td>
     <td><%= account_payable.try(:status_list).try(:key_name) %></td>
     <td><%= account_payable.comment %></td>
-    <td><%= account_payable.operation_date_time.strftime("%Y/%m/%d %H:%M:%S") %></td>
+    <td><%= (account_payable.operation_date_time + 9.hours).strftime("%Y/%m/%d %H:%M:%S") %></td>
     <td><%= link_to 'Show', account_payable %></td>
   </tr>
 <% end %>

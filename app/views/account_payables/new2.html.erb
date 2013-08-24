@@ -1,0 +1,46 @@
+<h1>支払い対象選択</h1>
+
+<%= form_for @account_payable, url: confirm_account_payables_path, method: :post do |f| %>
+<table id="purchases-table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>取引日</th>
+      <th>取引日(JP)</th>
+      <th>ユーザ</th>
+      <th>金額</th>
+      <th>ステータス</th>
+      <th>理由</th>
+      <th>操作日</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @account_payables.each do |account_payable| %>
+    <tr>
+      <td>
+        <%= check_box_tag 'check[]',account_payable.id ,false ,{}%></td>
+      <td>
+        <%= account_payable.transaction_date_time.strftime("%Y/%m/%d %H:%M:%S")  %></td>
+      <td>
+        <%= (account_payable.transaction_date_time + 9.hours).strftime("%Y/%m/%d %H:%M:%S") %></td>
+      <td>
+        <%= account_payable.try(:user).try(:user_name) %></td>
+      <td>
+        <%= number_with_delimiter account_payable.price %></td>
+      <td>
+        <%= account_payable.try(:status_list).try(:key_name) %></td>
+      <td>
+        <%= account_payable.comment %></td>
+      <td>
+        <%= (account_payable.operation_date_time + 9.hours).strftime("%Y/%m/%d %H:%M:%S") %></td>
+    </tr>
+    <% end %></tbody>
+</table>
+
+<div class="actions">
+  <%= f.submit("支払い") %>
+  <%= f.submit("保留") %></div>
+<% end %>
+
+<%= link_to_function "Back", "history.back()"%>

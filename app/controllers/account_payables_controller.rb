@@ -26,20 +26,20 @@ class AccountPayablesController < ApplicationController
   end
 
   def select
-   @account_payable = AccountPayable.new
-   respond_to do |format|
+    @account_payable = AccountPayable.new
+    respond_to do |format|
       format.html # select.html.erb
       # format.json { render json: @product_result }
     end
   end
 
 
-  # GET /account_payables/new
-  # GET /account_payables/new.json
+  # GET /account_payables/new2
+  # GET /account_payables/new2.json
   def new2
-    user_id = params[:owner_id]
-    @account_payables = AccountPayable.get(:user_id => user_id,:status => 0)
-
+    user_id = params[:account_payable][:user_id]
+    @account_payables = AccountPayable.all(:user_id => user_id,:status => 1) | AccountPayable.all(:user_id => user_id,:status => 3)
+    @account_payable = AccountPayable.new
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @account_payable }
@@ -49,6 +49,55 @@ class AccountPayablesController < ApplicationController
   # GET /account_payables/1/edit
   def edit
     @account_payable = AccountPayable.get(params[:id])
+  end
+
+  def confirm
+    checkbox_flags = params[:check]
+    @account_payable = AccountPayable.new
+    @account_payables = []
+    @targets = []
+    @sum = 0
+    checkbox_flags.each do |check|
+      target = AccountPayable.first(:id => check)
+      @account_payables << target
+      @targets << target[:id]
+      @sum += target[:price].to_i
+    end
+
+    @targets = @targets.join(",")
+
+    if params[:commit] == "支払い"
+      @flag = "支払い"
+    else
+      @flag = "保留"
+    end
+
+
+    respond_to do |format|
+      format.html # select.html.erb
+      # format.json { render json: @product_result }
+    end
+  end
+
+
+  def ok
+    @account_payable = AccountPayable.new
+    flag = params[:account_payable][:flag]
+    checkbox_flags = params[:account_payable][:check].split(",")
+
+    checkbox_flags.each do |check|
+      target = AccountPayable.first(:id => check)
+
+      if flag == "支払い"
+        target.update(:status => 2,:operation_date_time => Time.now.utc )#utc
+      else
+        target.update(:status => 3,:operation_date_time => Time.now.utc )#utc
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to @account_payable, notice: 'Account payable was successfully updated.' }
+      # format.json { render json: @product_result }
+    end
   end
 
   # POST /account_payables
@@ -97,10 +146,10 @@ class AccountPayablesController < ApplicationController
 
   private
 
-    # Use this method to whitelist the permissible parameters. Example:
-    # params.require(:person).permit(:name, :age)
-    # Also, you can specialize this method with per-user checking of permissible attributes.
-    def account_payable_params
-      params.require(:account_payable).permit(:comment, :operation_date_time, :price, :status, :transaction_date_time, :user_id)
-    end
+  # Use this method to whitelist the permissible parameters. Example:
+  # params.require(:person).permit(:name, :age)
+  # Also, you can specialize this method with per-user checking of permissible attributes.
+  def account_payable_params
+    params.require(:account_payable).permit(:comment, :operation_date_time, :price, :status, :transaction_date_time, :user_id)
+  end
 end

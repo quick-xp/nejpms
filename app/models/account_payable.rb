@@ -32,4 +32,5 @@ class AccountPayable
     total = AccountPayable.sum(:price, :conditions => ['status = ? and userID = ?','1',user_id])
     total
   end
+
 end
